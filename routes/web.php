@@ -6,6 +6,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchPageController;
 use App\Http\Controllers\SearchResultController;
 use App\Http\Controllers\PersonalDetailsController;
+use App\Http\Controllers\HallController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +23,11 @@ use App\Http\Controllers\PersonalDetailsController;
 Route::get('/', function () {
     return view('backend.dashboard');
 });
+
+Route::get('/home', [HomeController::class, 'index'])->name('home.index');
+
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -40,6 +47,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{id}', [SearchPageController::class, 'edit'])->name('searchpage.edit');
         Route::post('/update/{id}', [SearchPageController::class, 'update'])->name('searchpage.update');
         Route::delete('/destroy/{id}', [SearchPageController::class, 'destroy'])->name('searchpage.destroy');
+    });
+    Route::prefix('hall')->group(function () {
+        Route::get('/index', [HallController::class, 'index'])->name('hall.index');
+        Route::get('/create', [HallController::class, 'create'])->name('hall.create');
+        Route::post('/store', [HallController::class, 'store'])->name('hall.store');
+        Route::get('/edit/{id}', [HallController::class, 'edit'])->name('hall.edit');
+        Route::post('/update/{id}', [HallController::class, 'update'])->name('hall.update');
+        Route::post('/destroy/{id}', [HallController::class, 'destroy'])->name('hall.destroy');
     });
     Route::prefix('person-details')->group(function () {
         Route::get('/index', [PersonalDetailsController::class, 'index'])->name('person.index');

@@ -31,6 +31,11 @@
                 <i class="bi bi-journal-text"></i><span>Customer</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('hall.index') }}">
+                <i class="bi bi-journal-text"></i><span>Hall</span>
+            </a>
+        </li>
 
     </ul>
 
