@@ -24,8 +24,9 @@ class PersonalDetailsRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|min:8|max:17|regex:/^([0-9\s\-\+\(\)]*)$/',
             'address' => 'required',
+            'comment' => 'required',
         ];
     }
 }

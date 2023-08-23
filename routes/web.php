@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchPageController;
@@ -51,5 +52,15 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/searchresult', [SearchResultController::class, 'index'])->name('searchresult.index');
+Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+Route::post('/stripe', [PaymentController::class, 'stripePost'])->name('stripe.post');
+
+
+Route::get('handle-payment', [PaymentController::class, 'handlePayment’'])->name('make.payment');
+
+Route::get('cancel-payment', [PaymentController::class, 'paymentCancel’'])->name('cancel.payment');
+
+Route::get('payment-success', [PaymentController::class, 'paymentSuccess’'])->name('success.payment');
+
 
 require __DIR__.'/auth.php';

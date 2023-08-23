@@ -10,8 +10,7 @@
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse"
-                href="">
+            <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="">
                 <i class="bi bi-journal-text"></i><span>Hall</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -28,9 +27,8 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#forms-nav1" data-bs-toggle="collapse"
-                href="{{ route('person.index') }}">
-                <i class="bi bi-journal-text"></i><span>Customer</span><i class="bi bi-chevron-down ms-auto"></i>
+            <a class="nav-link collapsed" href="{{ route('person.index') }}">
+                <i class="bi bi-journal-text"></i><span>Customer</span>
             </a>
         </li>
 
