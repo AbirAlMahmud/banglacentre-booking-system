@@ -40,7 +40,7 @@ class HallController extends Controller
         $hall->hall_name = $request->input('hall_name');
         $hall->description = $request->input('description');
         $hall->price = $request->input('price');
-        $hall->discount_percentage = $request->input('discount_percentage');
+        $hall->charity_discount = $request->input('discount_percentage');
         $hall->status = 'available';
         $hall->save();
             return redirect()->route('hall.index')->withMessage('Hall Added');
@@ -84,7 +84,7 @@ class HallController extends Controller
             }
             $hall->hall_name = $request->input('hall_name');
             $hall->price = $request->input('price');
-            $hall->discount_percentage = $request->input('discount_percentage');
+            $hall->charity_discount = $request->input('discount_percentage');
             $hall->description = $request->input('description');
             $hall->save();
             return redirect()->route('hall.index')->withMessage('Hall Updated');
@@ -105,27 +105,7 @@ class HallController extends Controller
         }
     }
 
-    public function uploadImage($file)
-    {
-        $timestamp = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
 
-        $file_name = $timestamp . '.' . $file->getClientOriginalExtension();
 
-        $pathToUpload = storage_path() . '/app/public/searchpage/';
 
-        if (!is_dir($pathToUpload)) {
-            mkdir($pathToUpload, 0755, true);
-        }
-
-        Image::make($file)->resize(634, 792)->save($pathToUpload . $file_name);
-        return $file_name;
-    }
-
-    private function unlink($file)
-    {
-        $pathToUpload = storage_path().'/app/public/searchpage/';
-        if($file != '' && file_exists($pathToUpload.$file)){
-            @unlink($pathToUpload.$file);
-        }
-    }
 }

@@ -17,47 +17,40 @@ class HomeController extends Controller
     {
         $check_in_date = $request->input('check_in_date');
         $check_out_date = $request->input('check_out_date');
-        $hall = $request->input('hall_name');
+        $hall_name = $request->input('hall_name');
         $period = $request->input('time_period');
         $charity = $request->input('charity');
         $start_time = null;
-        $end_time = null;
-
+        $end_times = null;
+    
         // If period is 'Custom', set start_time and end_time
         if ($period === 'Custom') {
-            $start_time = $request->input('start_time'); 
-            $end_time = $request->input('end_time'); 
+            $start_time = $request->input('start_time');
+            $end_time = $request->input('end_time');
         }
 
-        $query = Hall::query();
-
-        $query->where('status', 'available')
-            ->where(function ($q) use ($check_in_date, $check_out_date) {
-                $q->where('check_in_date', '<=', $check_in_date)
-                    ->where('check_out_date', '>=', $check_out_date);
+        $query = Hall::where('status', 'available')
+        ->where('hall_name', 'like', '%' . $hall_name . '%')
+        ->when($charity, function ($query) use ($charity) {
+            return $query->where('charity_discount', '>=', $charity);
+        })
+        ->when($check_in_date && $check_out_date, function ($query) use ($check_in_date, $check_out_date) {
+            return $query->where(function ($subQuery) use ($check_in_date, $check_out_date) {
+                $subQuery->where(function ($dateQuery) use ($check_in_date, $check_out_date) {
+                    $dateQuery->whereBetween('check_in_datetime', [$check_in_date, $check_out_date])
+                        ->orWhereBetween('check_out_datetime', [$check_in_date, $check_out_date]);
+                });
+                if ($start_time && $end_times) {
+                    $subQuery->orWhere(function ($timeQuery) use ($check_in_date, $start_time, $end_time) {
+                        $timeQuery->whereDate('check_in_datetime', $check_in_date)
+                            ->whereTime('check_in_datetime', '>=', $start_time)
+                            ->whereTime('check_in_datetime', '<=', $end_time);
+                    });
+                }
             });
+        })
+        ->get();
 
-        $results = $query->get();
-        // Add filters based on the provided data
-        $query->where('hall_name', $hall);
-
-        if ($charity === 'Charity') {
-            $query->where('has_discount', true);
-        }
-        if ($period === 'FullDay') {
-            // If the period is 'FullDay', check status
-            $query->where('status', 'active');
-        } elseif ($period === 'Custom') {
-            // If the period is 'Custom', check status and time range
-            $query->where('status', 'active')
-                ->where('start_time', '<=', $start_time)
-                ->where('end_time', '>=', $end_time);
-        }
-
-        // Execute the query
-        $results = $query->get();
-
-        // Now, $results contains the halls that match the specified criteria
 
         return view('your.view.name', ['results' => $results]);
     }

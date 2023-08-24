@@ -31,11 +31,10 @@
                         @foreach ($hall as $hall)
                         <tr>
                             <th scope="row">{{ $sl++ }}</th>
-                         
                             <td>{{ $hall->hall_name ?? '' }}</td>
                             <td>{!! $hall->description ?? '' !!}</td>
                             <td>{{ $hall->price ?? '' }}</td>
-                            <td>{{ $hall->discount_percentage ?? '' }}</td>
+                            <td>{{ $hall->charity_discount ?? '' }}</td>
                             <td>
                                 @if ($hall->image)
                                     <img style="height: 50px;width:50px;" src="{{ asset('uploads/images/' . $hall->image) }}"  alt="">
