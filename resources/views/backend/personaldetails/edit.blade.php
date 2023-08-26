@@ -54,7 +54,7 @@
                         <div class="col">
                             <div>
                                 <label class="form-label">Comment</label>
-                                <textarea type="text" name="comment" class="form-control" id="ckeditor" value="{{ $personaldetail->comment }}"></textarea>
+                                <textarea type="text" name="comment" class="form-control" id="ckeditor" value="{{ $personaldetail->comment }}">{{ $personaldetail->comment }}</textarea>
                                 @error('comment')
                                     <div class="text-danger mt-3">{{ $message }}</div>
                                 @enderror

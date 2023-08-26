@@ -4,8 +4,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
+        @php
+            session_start();
+        @endphp
+
 
     <div class="container" style="margin-top: 70px;margin-bottom: 90px">
+
+        <div class="progress mb-5">
+            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
+                aria-valuemax="100">25%</div>
+        </div>
+
+
         <h3 class="text-center mb-3" style="text-decoration: underline;">Choose Your Hall</h3>
         <div class="card">
             <div class="card-header d-flex">
@@ -24,6 +35,7 @@
                             <th scope="col">End Time</th>
                             <th scope="col">Booking Type</th>
                             <th scope="col">Price</th>
+                            <th scope="col">Discount</th>
                             <th scope="col">Description</th>
                             <th scope="col">Image</th>
                             <th scope="col">Action</th>
@@ -44,6 +56,7 @@
                                 <td>{{ $searchpage->end_time ?? '' }}</td>
                                 <td>{{ $searchpage->booking_type ?? '' }}</td>
                                 <td>{{ $searchpage->price ?? '' }}</td>
+                                <td>{{ $searchpage->discount ?? '' }}</td>
                                 <td>{!! $searchpage->description ?? '' !!}</td>
                                 <td>
                                     @if (file_exists(storage_path() . '/app/public/searchpage/' . $searchpage->image))
@@ -55,11 +68,15 @@
                                 </td>
                                 <td>
                                     <button type="submit" class="btn btn-sm btn-primary" style="padding: 5px 15px"
-                                        data-bs-toggle="modal" data-bs-target="<?php echo '#exampleModal'.$searchpage->id ?>">
+                                        data-bs-toggle="modal" data-bs-target="<?php echo '#exampleModal' . $searchpage->id; ?>">
                                         Book Now</button>
 
+                                        @php
+                                            $_SESSION['hall_id'] = $searchpage->id;
+                                        @endphp
+
                                     <!-- Modal -->
-                                    <div class="modal fade" id="<?php echo 'exampleModal'.$searchpage->id ?>" tabindex="-1"
+                                    <div class="modal fade" id="<?php echo 'exampleModal' . $searchpage->id; ?>" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -74,27 +91,29 @@
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col">Ser No.</th>
-                                                                <th scope="col">Period</th>
                                                                 <th scope="col">Booking Type</th>
                                                                 <th scope="col">Price</th>
+                                                                <th scope="col">Discount</th>
                                                                 <th scope="col">Total Price</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @php
-                                                            $sl=1;
+                                                                $sl = 1;
                                                             @endphp
                                                             <tr>
                                                                 <th scope="row">{{ $sl++ }}</th>
-                                                                <td>{{ $searchpage->period ?? '' }} </td>
                                                                 <td>{{ $searchpage->booking_type ?? '' }}</td>
                                                                 <td>{{ $searchpage->price ?? '' }}</td>
+                                                                <td>{{ $searchpage->discount ?? '' }}</td>
                                                                 <td><?php
-                                                                 if($searchpage->booking_type=='Charity'){
-                                                                    echo (($searchpage->price)*50)/100;
-                                                                }else{
+                                                                if ($searchpage->booking_type == 'Charity') {
+                                                                    echo $searchpage->price - $searchpage->discount;
+                                                                    $_SESSION['total_paid'] = $searchpage->price - $searchpage->discount;
+                                                                } else {
                                                                     echo $searchpage->price;
-                                                                }  ?></td>
+                                                                    $_SESSION['total_paid'] = $searchpage->price;
+                                                                } ?></td>
                                                             </tr>
                                                         </tbody>
                                                         <div>* 50% discount for charity booking</div>
@@ -103,7 +122,8 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Close</button>
-                                                    <a href="{{ route('person.create') }}" class="btn btn-primary">Confirm</a>
+                                                    <a href="{{ route('person.create') }}"
+                                                        class="btn btn-primary">Confirm</a>
                                                 </div>
                                             </div>
                                         </div>

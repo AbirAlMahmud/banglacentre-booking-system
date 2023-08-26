@@ -24,6 +24,7 @@
                             <th scope="col">Booking Type</th>
                             <th scope="col">Price</th>
                             <th scope="col">Description</th>
+                            <th scope="col">Discount</th>
                             <th scope="col">Image</th>
                             <th scope="col">Actions</th>
                         </tr>
@@ -44,6 +45,7 @@
                             <td>{{ $searchpage->booking_type ?? '' }}</td>
                             <td>{{ $searchpage->price ?? '' }}</td>
                             <td>{!! $searchpage->description ?? '' !!}</td>
+                            <td>{{ $searchpage->discount ?? '' }}</td>
                             <td>
                                 @if (file_exists(storage_path() . '/app/public/searchpage/' . $searchpage->image))
                                     <img src="{{ asset('storage/searchpage/' . $searchpage->image) }}"

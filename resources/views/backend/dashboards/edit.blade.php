@@ -6,21 +6,23 @@
 
     <div class="container">
         <div class="card">
-            <h4 class="card-header">Edit Hall</h4>
+            <h4 class="card-header">Edit Booking</h4>
             <div class="card-body">
-                <form action="{{ route('searchpage.update', $searchpage->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('dashboard.update', $dashboard->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row" style="padding-left: 25%; padding-right: 25%">
                         <div class="col-md mt-3">
                             <label for="checkindate" class="form-label">Check-in Date</label>
-                            <input name="check_in_date" id="date_picker" type="date" class="form-control" value="{{ $searchpage->check_in_date }}">
+                            <input name="check_in_date" id="date_picker" type="date" class="form-control"
+                                value="{{ $dashboard->check_in_date }}">
                             @error('check_in_date')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-md mt-3">
                             <label for="checkoutdate" class="form-label">Check-out Date</label>
-                            <input name="check_out_date" id="date_picker2" type="date" class="form-control" value="{{ $searchpage->check_out_date }}">
+                            <input name="check_out_date" id="date_picker2" type="date" class="form-control"
+                                value="{{ $dashboard->check_out_date }}">
                             @error('check_out_date')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
@@ -30,7 +32,7 @@
                         <div class="col-md mt-3">
                             <label for="Hall" class="form-label">Hall</label>
                             <select class="form-select" id="hall" name="hall">
-                                <option value="{{ $searchpage->hall }}" checked>{{ $searchpage->hall ?? '' }}</option>
+                                <option value="{{ $dashboard->hall }}" checked>{{ $dashboard->hall ?? '' }}</option>
                                 <option value="Hall 1">Hall 1</option>
                                 <option value="Hall 2">Hall 2</option>
                                 <option value="Hall 3">Hall 3</option>
@@ -44,7 +46,7 @@
                         <div class="col-md mt-3">
                             <label for="Period" class="form-label">Period</label>
                             <select class="form-select" id="period" name="period">
-                                <option value="{{ $searchpage->period }}" checked>{{ $searchpage->period ?? '' }}</option>
+                                <option value="{{ $dashboard->period }}" checked>{{ $dashboard->period ?? '' }}</option>
                                 <option value="Half Day">Half Day</option>
                                 <option value="Full Day">Full Day</option>
                                 <option value="Hour 1">Hour 1</option>
@@ -60,14 +62,16 @@
                     <div class="row" style="padding-left: 25%; padding-right: 25%">
                         <div class="col-md mt-3">
                             <label class="form-label" for="Start Time">Start Time</label>
-                            <input class="form-control" type="time" id="start_time" name="start_time" value="{{ $searchpage->start_time }}">
+                            <input class="form-control" type="time" id="start_time" name="start_time"
+                                value="{{ $dashboard->start_time }}">
                             @error('start_time')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-md mt-3">
                             <label class="form-label" for="End Time">End Time</label>
-                            <input class="form-control" type="time" id="end_time" name="end_time" value="{{ $searchpage->end_time }}">
+                            <input class="form-control" type="time" id="end_time" name="end_time"
+                                value="{{ $dashboard->end_time }}">
                             @error('end_time')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
@@ -86,7 +90,7 @@
                         </div>
                         <div class="col-md mt-3">
                             <label for="Price" class="form-label">Price</label>
-                            <input type="number" name="price" class="form-control" value="{{ $searchpage->price }}">
+                            <input type="number" name="price" class="form-control" value="{{ $dashboard->price }}">
                             @error('price')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
@@ -95,7 +99,7 @@
                     <div class="row" style="padding-left: 25%; padding-right: 25%">
                         <div class="col-md mt-3">
                             <label for="Description" class="form-label">Description</label>
-                            <textarea type="text" name="description" class="form-control" id="ckeditor" value="{{ $searchpage->description }}">{{ $searchpage->description }}</textarea>
+                            <textarea type="text" name="description" class="form-control" id="ckeditor">{{ $dashboard->description }}</textarea>
                             @error('description')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
@@ -104,7 +108,7 @@
                     <div class="row" style="padding-left: 25%; padding-right: 25%">
                         <div class="col-md mt-3">
                             <label for="image" class="form-label">Image</label>
-                            <input type="file" name="image" class="form-control" value="{{ $searchpage->image }}">
+                            <input type="file" name="image" class="form-control" value="{{ $dashboard->image }}">
                             @error('image')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
@@ -113,8 +117,61 @@
                     <div class="row" style="padding-left: 25%; padding-right: 25%">
                         <div class="col-md mt-3">
                             <label for="Discount" class="form-label">Discount</label>
-                            <input type="number" name="discount" class="form-control" value="{{ $searchpage->discount }}">
+                            <input type="number" name="discount" class="form-control"
+                                value="{{ $dashboard->discount }}">
                             @error('discount')
+                                <div class="text-danger mt-3">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row" style="padding-left: 25%; padding-right: 25%">
+                        <div class="col-md mt-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" name="name" class="form-control" value="{{ $dashboard->name }}">
+                            @error('name')
+                                <div class="text-danger mt-3">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md mt-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" value="{{ $dashboard->email }}">
+                            @error('email')
+                                <div class="text-danger mt-3">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row" style="padding-left: 25%; padding-right: 25%">
+                        <div class="col-md mt-3">
+                            <label class="form-label">Phone</label>
+                            <input type="tel" name="phone" class="form-control" value="{{ $dashboard->phone }}">
+                            @error('phone')
+                                <div class="text-danger mt-3">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md mt-3">
+                            <label class="form-label">Address</label>
+                            <input type="text" name="address" class="form-control"
+                                value="{{ $dashboard->address }}">
+                            @error('address')
+                                <div class="text-danger mt-3">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row" style="padding-left: 25%; padding-right: 25%">
+                        <div class="col-md mt-3">
+                            <label class="form-label">Comment</label>
+                            <textarea type="text" name="comment" class="form-control" id="ckeditor2" value="{{ $dashboard->comment }}">{{ $dashboard->comment }}</textarea>
+                            @error('comment')
+                                <div class="text-danger mt-3">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row" style="padding-left: 25%; padding-right: 25%">
+                        <div class="col-md mt-3">
+                            <label for="Total Paid" class="form-label">Total Paid</label>
+                            <input type="number" name="total_paid" class="form-control"
+                                value="{{ $dashboard->total_paid }}">
+                            @error('total_paid')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
                         </div>
@@ -123,7 +180,7 @@
                         <div class="col-md mt-3">
                             <button type="submit" class="btn btn-sm btn-primary mt-3"><i class="bi bi-check"></i>
                                 Save</button>
-                            <a href="{{ route('searchpage.index') }}" class="btn btn-sm btn-danger mt-3"><i
+                            <a href="{{ route('admin.index') }}" class="btn btn-sm btn-danger mt-3"><i
                                     class="bi bi-x"></i>
                                 Cancel</a>
                         </div>
@@ -137,6 +194,9 @@
     <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
     <script>
         CKEDITOR.replace('ckeditor');
+    </script>
+    <script>
+        CKEDITOR.replace('ckeditor2');
     </script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
     <script language="javascript">
