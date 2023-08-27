@@ -2,32 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Hall;
-use Carbon\Carbon;
-use Exception;
+use App\Models\HallManage;
 use Illuminate\Http\Request;
+use Exception;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
 
-
-class HallController extends Controller
+class HallManageController extends Controller
 {
     public function index()
     {
-        $hall = Hall::all();
-
-        return view('backend.hall.index', compact('hall'));
+        $halls = HallManage::latest()->get();
+        return view('backend.hallManage.index', compact('halls'));
     }
 
     public function create()
     {
-        return view('backend.hall.create');
+        return view('backend.hallManage.create');
     }
 
     public function store(Request $request)
     {
         try {
-        $hall = new Hall();
+        $hall = new HallManage();
 
         if ($request->hasFile('image')) {
             $uploadedFile = $request->file('image');
@@ -35,15 +32,15 @@ class HallController extends Controller
             $fileName = time() . '_' . $uploadedFile->getClientOriginalName();
             $uploadedFile->move($path, $fileName);
             $hall->image=  $fileName ;
-
         }
         $hall->hall_name = $request->input('hall_name');
-        $hall->description = $request->input('description');
+        $hall->hall_description = $request->input('hall_description');
+        $hall->capacity = $request->input('capacity');
         $hall->price = $request->input('price');
-        $hall->charity_discount = $request->input('discount_percentage');
+        $hall->charity_discount = $request->input('charity_discount');
         $hall->status = 'available';
         $hall->save();
-            return redirect()->route('hall.index')->withMessage('Hall Added');
+            return redirect()->route('hall_manage.index')->withMessage('Hall Added');
         } 
         catch (Exception $e) {
             return redirect()->back()->withError($e->getMessage());
@@ -52,8 +49,8 @@ class HallController extends Controller
 
     public function edit($id)
     {
-        $hall = Hall::find($id);
-        return view('backend.hall.edit', compact('hall'));
+        $hall = HallManage::find($id);
+        return view('backend.hallManage.edit', compact('hall'));
     }
 
     public function update(Request $request, $id)
@@ -62,10 +59,11 @@ class HallController extends Controller
             $request->validate([
                 'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image type and size
                 'hall_name' => 'required|string|max:255',
-                'price' => 'required|max:255',
-                'discount_percentage' => 'required|max:255',
+                'price' => 'required|numeric',
+                'charity_discount' => 'required|numeric',
+                'capacity' => 'required|numeric',
             ]);
-            $hall = Hall::findOrFail($id);
+            $hall = HallManage::findOrFail($id);
             if ($request->has('delete_image')) {
                 // Delete the old image if it exists
                 File::delete(public_path('uploads/images/' . $hall->image));
@@ -83,11 +81,13 @@ class HallController extends Controller
         
             }
             $hall->hall_name = $request->input('hall_name');
+            $hall->hall_description = $request->input('hall_description');
+            $hall->capacity = $request->input('capacity');
             $hall->price = $request->input('price');
-            $hall->charity_discount = $request->input('discount_percentage');
-            $hall->description = $request->input('description');
+            $hall->charity_discount = $request->input('charity_discount');
+            $hall->status ='available';
             $hall->save();
-            return redirect()->route('hall.index')->withMessage('Hall Updated');
+            return redirect()->route('hall_manage.index')->withMessage('Hall Updated');
         } catch (\Exception $e) {
             return redirect()->back()->withError($e->getMessage());
         }
@@ -96,16 +96,12 @@ class HallController extends Controller
     public function destroy($id)
     {
         try{
-            $hall = Hall::find($id);
-            $hall->status = 'off';
-            $hall->save();
-            return redirect()->route('hall.index')->withMessage('Hall Deleted');
+            $hall = HallManage::findOrFail($id);
+            $hall->forceDelete();
+            return redirect()->route('hall_manage.index')->withMessage('Hall Deleted');
         }catch(Exception $e){
             return redirect()->back()->withError($e->getMessage());
         }
     }
-
-
-
-
+   
 }

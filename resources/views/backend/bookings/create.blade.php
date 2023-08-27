@@ -6,52 +6,47 @@
 
     <div class="container">
         <div class="card">
-            <h4 class="card-header">Create Hall</h4>
+            <h4 class="card-header">Create Booking</h4>
             <div class="card-body">
-                <form action="{{ route('hall.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    
-                    <div class="row" style="padding-left: 25%; padding-right: 25%">
+                    <div class="row" style="padding-left: 25%; padding-right: 25%" required>
                         <div class="col-md mt-3">
-                            <label for="hall_name" class="form-label">Hall Name</label>
-                            <input type="text" name="hall_name" class="form-control">
-                            @error('hall_name')
+                            <label for="hall_manage_id" class="form-label">Hall</label>
+                            <select name="hall_manage_id" class="form-control">
+                                <option value="">Select Hall Manage</option>
+                                @foreach($hallManages as $hall)
+                                    <option value="{{ $hall->id }}">{{ $hall->hall_name }}</option>
+                                @endforeach
+                            </select>
+                            @error('hall_manage_id')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
-                    <div class="row" style="padding-left: 25%; padding-right: 25%">
+                    <div class="row" style="padding-left: 25%; padding-right: 25%" required>
                         <div class="col-md mt-3">
-                            <label for="Description" class="form-label">Description</label>
-                            <textarea type="text" name="description" class="form-control" id="ckeditor"></textarea>
-                            @error('description')
+                            <label for="check_in_date" class="form-label">Check-In Date</label>
+                            <input type="date" name="check_in_date" class="form-control">
+                            @error('check_in_date')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
-                    <div class="row" style="padding-left: 25%; padding-right: 25%">
+                    <div class="row" style="padding-left: 25%; padding-right: 25%" required>
                         <div class="col-md mt-3">
-                            <label for="price" class="form-label">Price</label>
-                            <input type="number" name="price" class="form-control" >
-                            @error('price')
+                            <label for="check_out_date" class="form-label">Check-Out Date</label>
+                            <input type="date" name="check_out_date" class="form-control">
+                            @error('check_out_date')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
-                    <div class="row" style="padding-left: 25%; padding-right: 25%">
+                    <div class="row" style="padding-left: 25%; padding-right: 25%" requried>
                         <div class="col-md mt-3">
-                            <label for="discount_percentage" class="form-label">Discount Percentage for Charity</label>
-                            <input type="number" name="discount_percentage" class="form-control" >
-                            @error('discount_percentage')
-                                <div class="text-danger mt-3">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row" style="padding-left: 25%; padding-right: 25%">
-                        <div class="col-md mt-3">
-                            <label for="image" class="form-label">Image</label>
-                            <input type="file" name="image" class="form-control">
-                            @error('image')
+                            <label for="out_time" class="form-label">Amount</label>
+                            <input type="time" name="out_time" class="form-control">
+                            @error('out_time')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
                         </div>
@@ -60,7 +55,7 @@
                         <div class="col-md mt-3">
                             <button type="submit" class="btn btn-sm btn-primary mt-3"><i class="bi bi-check"></i>
                                 Save</button>
-                            <a href="{{ route('hall.index') }}" class="btn btn-sm btn-danger mt-3"><i
+                            <a href="{{ route('shift.index') }}" class="btn btn-sm btn-danger mt-3"><i
                                     class="bi bi-x"></i>
                                 Cancel</a>
                         </div>

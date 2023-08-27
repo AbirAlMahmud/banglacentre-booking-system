@@ -6,14 +6,14 @@
 
     <div class="container">
         <div class="card">
-            <h4 class="card-header">Edit Hall</h4>
+            <h4 class="card-header">Create Hall</h4>
             <div class="card-body">
-                <form action="{{ route('hall.update', $hall->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('hallmanage.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row" style="padding-left: 25%; padding-right: 25%">
                         <div class="col-md mt-3">
-                            <label for="hall_name" class="form-label">Hall name</label>
-                            <input type="text" name="hall_name" class="form-control" value="{{ $hall->hall_name }}">
+                            <label for="hall_name" class="form-label">Hall Name</label>
+                            <input type="text" name="hall_name" class="form-control">
                             @error('hall_name')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
@@ -21,44 +21,46 @@
                     </div>
                     <div class="row" style="padding-left: 25%; padding-right: 25%">
                         <div class="col-md mt-3">
-                            <label for="Description" class="form-label">Description</label>
-                            <textarea name="description" id="ckeditor" class="form-control">{{ $hall->description }}</textarea>
-                            @error('description')
+                            <label for="hall_description" class="form-label">Description</label>
+                            <textarea type="text" name="hall_description" class="form-control" id="ckeditor"></textarea>
+                            @error('hall_description')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
-                    
-                    
                     <div class="row" style="padding-left: 25%; padding-right: 25%">
                         <div class="col-md mt-3">
-                            <label for="Price" class="form-label">Price</label>
-                            <input type="number" name="price" class="form-control" value="{{ $hall->price }}">
+                            <label for="capacity" class="form-label">Capacity</label>
+                            <input type="number" name="capacity" class="form-control">
+                            @error('capacity')
+                                <div class="text-danger mt-3">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row" style="padding-left: 25%; padding-right: 25%">
+                        <div class="col-md mt-3">
+                            <label for="charity_discount" class="form-label">Charity Discount</label>
+                            <input type="number" name="charity_discount" class="form-control">
+                            @error('charity_discount')
+                                <div class="text-danger mt-3">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                 
+                    <div class="row" style="padding-left: 25%; padding-right: 25%">
+                        <div class="col-md mt-3">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" name="price" class="form-control" >
                             @error('price')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
+               
                     <div class="row" style="padding-left: 25%; padding-right: 25%">
                         <div class="col-md mt-3">
-                            <label for="discount_percentage" class="form-label">Discount Price</label>
-                            <input type="number" name="discount_percentage" class="form-control" value="{{ $hall->discount_percentage }}">
-                            @error('discount_percentage')
-                                <div class="text-danger mt-3">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                   
-                    <div class="row" style="padding-left: 25%; padding-right: 25%">
-                        <div class="col-md mt-3">
-                            <label for="image" class="form-label">Image</label><br>
-                            <img style="height: 100px;width:100px;" src="{{ asset('uploads/images/' . $hall->image) }}"  alt="">
-
-                            <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" id="delete_image" name="delete_image" value="1">
-                                <label class="form-check-label" for="delete_image">Delete Existing Image</label>
-                            </div>
-                            <input type="file" name="image" class="form-control" value="{{ $hall->image }}">
+                            <label for="image" class="form-label">Image</label>
+                            <input type="file" name="image" class="form-control">
                             @error('image')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
@@ -68,7 +70,7 @@
                         <div class="col-md mt-3">
                             <button type="submit" class="btn btn-sm btn-primary mt-3"><i class="bi bi-check"></i>
                                 Save</button>
-                            <a href="{{ route('hall.index') }}" class="btn btn-sm btn-danger mt-3"><i
+                            <a href="{{ route('hall_manage.index') }}" class="btn btn-sm btn-danger mt-3"><i
                                     class="bi bi-x"></i>
                                 Cancel</a>
                         </div>

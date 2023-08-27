@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('halls', function (Blueprint $table) {
+        Schema::create('hall_manages', function (Blueprint $table) {
             $table->id();
             $table->string('hall_name');
-            $table->text('description')->nullable();
+            $table->text('hall_description')->nullable();
+            $table->string('capacity')->nullable();
             $table->string('price');
             $table->unsignedDecimal('charity_discount')->nullable();
-            $table->string('status')->default('available');
-            $table->datetime('check_in_datetime')->nullable();
-            $table->datetime('check_out_datetime')->nullable();
             $table->string('image')->nullable();
+            $table->string('status')->default('available');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('halls');
+        Schema::dropIfExists('hall_manages');
     }
 };
