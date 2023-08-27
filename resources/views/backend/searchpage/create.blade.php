@@ -110,6 +110,15 @@
                     </div>
                     <div class="row" style="padding-left: 25%; padding-right: 25%">
                         <div class="col-md mt-3">
+                            <label for="Discount" class="form-label">Discount</label>
+                            <input type="number" name="discount" class="form-control">
+                            @error('discount')
+                                <div class="text-danger mt-3">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row" style="padding-left: 25%; padding-right: 25%">
+                        <div class="col-md mt-3">
                             <button type="submit" class="btn btn-sm btn-primary mt-3"><i class="bi bi-check"></i>
                                 Save</button>
                             <a href="{{ route('searchpage.index') }}" class="btn btn-sm btn-danger mt-3"><i

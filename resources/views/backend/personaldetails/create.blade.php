@@ -10,6 +10,13 @@
 
 
     <div class="container" style="margin-top: 70px;margin-bottom: 90px; padding-left: 20%; padding-right: 20%">
+
+        <div class="progress mb-5">
+            <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0"
+                aria-valuemax="100">50%</div>
+        </div>
+
+
         <h3 class="text-center mb-3" style="text-decoration: underline;">Add Personal Details</h3>
         <div class="card">
             <div class="card-header d-flex">

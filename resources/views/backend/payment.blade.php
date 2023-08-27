@@ -3,10 +3,16 @@
 @section('main_content')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    </head>
 
 
     <div class="container" style="margin-top: 70px;margin-bottom: 90px">
+
+        <div class="progress mb-5">
+            <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0"
+                aria-valuemax="100">75%</div>
+        </div>
+
+
         <h3 class="text-center mb-3" style="text-decoration: underline;">Choose Your Payment</h3>
         <div class="card">
             <div class="card-header d-flex">
@@ -28,12 +34,32 @@
                         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <strong>This is the second item's accordion body.</strong> It is hidden by default, until
-                                the collapse plugin adds the appropriate classes that we use to style each element. These
-                                classes control the overall appearance, as well as the showing and hiding via CSS
-                                transitions. You can modify any of this with custom CSS or overriding our default variables.
-                                It's also worth noting that just about any HTML can go within the
-                                <code>.accordion-body</code>, though the transition does limit overflow.
+
+
+
+                                <center>
+                                <form action="/stripe" method="post">
+                                    @csrf
+                                    <script
+                                        src="https://checkout.stripe.com/checkout.js"
+                                        class="stripe-button"
+                                        data-key="pk_test_51NhzgxDLuce6dgBf3CtpjpzXm4dzIckcObxQn5z2Apgj6AUFOU1mJLMbH7pwSIIRaqNXIYup8MIWNc3DdOIyMA4p00NEywalWh"
+                                        data-amount="$_SESSION['total_paid']"
+                                        data-name="Your Company Name"
+                                        data-description="Example Charge"
+                                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                        data-locale="auto"
+                                        data-currency="gbp"
+                                        data-panel-label="Pay Now <?php echo $_SESSION['total_paid']."£"; ?>"
+                                    >
+                                    </script>
+                                </form>
+                            </center>
+
+
+
+
+
                             </div>
                         </div>
                     </div>
@@ -47,6 +73,21 @@
                         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body">
+
+
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        @if (session()->has('success'))
+                                            <div class="alert alert-success">
+                                                {{ session()->get('success') }}
+                                            </div>
+                                        @endif
+                                        <center>
+                                            <a href="{{ route('processTransaction') }}" class="btn btn-primary">Pay
+                                                with PayPal</a>
+                                        </center>
+                                    </div>
+                                </div>
 
 
                             </div>

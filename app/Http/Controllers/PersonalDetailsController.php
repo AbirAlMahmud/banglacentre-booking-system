@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Models\PersonalDetails;
 use App\Http\Requests\PersonalDetailsRequest;
+use Illuminate\Support\Facades\Session;
 
 class PersonalDetailsController extends Controller
 {
@@ -24,13 +25,14 @@ class PersonalDetailsController extends Controller
     public function store(PersonalDetailsRequest $request)
     {
         try {
-            PersonalDetails::create([
+            $personaldetails = PersonalDetails::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
                 'address' => $request->address,
                 'comment' => $request->comment,
             ]);
+            Session::put('personaldetail', $personaldetails->id);
             return redirect()->route('payment.index');
         } catch (Exception $e) {
             return redirect()->back()->withError($e->getMessage());
