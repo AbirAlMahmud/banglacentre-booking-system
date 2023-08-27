@@ -31,7 +31,16 @@
                 <i class="bi bi-journal-text"></i><span>Customer</span>
             </a>
         </li>
-
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('shift.index') }}">
+                <i class="bi bi-journal-text"></i><span>Shift</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('hall_manage.index') }}">
+                <i class="bi bi-journal-text"></i><span>Hall Manage</span>
+            </a>
+        </li>
     </ul>
 
 </aside>
