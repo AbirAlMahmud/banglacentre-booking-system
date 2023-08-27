@@ -41,6 +41,11 @@
                 <i class="bi bi-journal-text"></i><span>Hall Manage</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('booking.index') }}">
+                <i class="bi bi-journal-text"></i><span>Hall Booking</span>
+            </a>
+        </li>
     </ul>
 
 </aside>
