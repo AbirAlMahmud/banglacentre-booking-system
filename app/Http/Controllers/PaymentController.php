@@ -23,37 +23,7 @@ class PaymentController extends Controller
 
     public function confirmpage()
     {
-        $searchpage = SearchPage::find($_SESSION['hall_id']);
-        $personaldetail_id = Session::get('personaldetail');
-        $personaldetail = PersonalDetails::find($personaldetail_id);
-
-        try {
-            Dashboard::create([
-                'check_in_date' => $searchpage->check_in_date,
-                'check_out_date' => $searchpage->check_out_date,
-                'hall' => $searchpage->hall,
-                'period' => $searchpage->period,
-                'start_time' => $searchpage->start_time,
-                'end_time' => $searchpage->end_time,
-                'booking_type' => $searchpage->booking_type,
-                'price' => $searchpage->price,
-                'discount' => $searchpage->discount,
-                'description' => $searchpage->description,
-                'image' => $searchpage->image,
-                'name' => $personaldetail->name,
-                'email' => $personaldetail->email,
-                'phone' => $personaldetail->phone,
-                'address' => $personaldetail->address,
-                'comment' => $personaldetail->comment,
-                'total_paid' => $_SESSION['total_paid'],
-            ]);
-            $dashboards = Dashboard::all();
-            Session::put('dashboards', $dashboards);
-        } catch (Exception $e) {
-            return redirect()->back()->withError($e->getMessage());
-        }
-
-        return view('backend.confirmpage', compact('searchpage', 'personaldetail'));
+        return view('backend.confirmpage');
     }
 
 
@@ -62,7 +32,7 @@ class PaymentController extends Controller
         Stripe::setApiKey("sk_test_51NhzgxDLuce6dgBfhkXakAQE1HR076sag7ejtqiJicLeOgiCYWsaLmEkeBN4z3J5WAJ8HKxIoEJOJ1zLrRZfBh2R00ohnZX3qZ");
 
         $charge = Charge::create([
-            'amount' => $_SESSION['total_paid'], // Amount in cents
+            'amount' => 1000, // Amount in cents
             'currency' => 'gbp',
             'source' => $request->stripeToken,
             'description' => 'Example Charge',
@@ -93,7 +63,7 @@ class PaymentController extends Controller
                 0 => [
                     "amount" => [
                         "currency_code" => "GBP",
-                        "value" => $_SESSION['total_paid'],
+                        "value" => 1000,
                     ]
                 ]
             ]

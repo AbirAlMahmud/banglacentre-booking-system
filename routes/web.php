@@ -74,6 +74,15 @@ Route::get('/cancel-transaction', [PaymentController::class, 'cancelTransaction'
 
 
 Route::get('/confirmpage', [PaymentController::class, 'confirmpage'])->name('confirmpage');
+Route::get('/halllist', function () {
+    return view('backend.halllist');
+});
+Route::get('/halldetails', function () {
+    return view('backend.halldetails');
+});
+Route::get('/customerinfo', function () {
+    return view('backend.customerinfo');
+});
 
 
 require __DIR__.'/auth.php';
