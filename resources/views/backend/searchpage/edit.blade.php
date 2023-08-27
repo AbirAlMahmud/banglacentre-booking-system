@@ -95,7 +95,7 @@
                     <div class="row" style="padding-left: 25%; padding-right: 25%">
                         <div class="col-md mt-3">
                             <label for="Description" class="form-label">Description</label>
-                            <textarea type="text" name="description" class="form-control" id="ckeditor" value="{{ $searchpage->description }}"></textarea>
+                            <textarea type="text" name="description" class="form-control" id="ckeditor" value="{{ $searchpage->description }}">{{ $searchpage->description }}</textarea>
                             @error('description')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
@@ -106,6 +106,15 @@
                             <label for="image" class="form-label">Image</label>
                             <input type="file" name="image" class="form-control" value="{{ $searchpage->image }}">
                             @error('image')
+                                <div class="text-danger mt-3">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row" style="padding-left: 25%; padding-right: 25%">
+                        <div class="col-md mt-3">
+                            <label for="Discount" class="form-label">Discount</label>
+                            <input type="number" name="discount" class="form-control" value="{{ $searchpage->discount }}">
+                            @error('discount')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
                         </div>

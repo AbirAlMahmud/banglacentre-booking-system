@@ -41,6 +41,7 @@ class SearchPageController extends Controller
                 'price' => $request->price,
                 'description' => $request->description,
                 'image' => $image,
+                'discount' => $request->discount,
             ]);
             return redirect()->route('searchpage.index')->withMessage('Hall Added');
         } catch (Exception $e) {
