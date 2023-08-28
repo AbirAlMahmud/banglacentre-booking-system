@@ -13,6 +13,7 @@ use App\Http\Controllers\SearchResultController;
 use App\Http\Controllers\PersonalDetailsController;
 use App\Http\Controllers\HallManageController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentManageController;
 use App\Http\Controllers\ShiftController;
 
 /*
@@ -94,6 +95,9 @@ Route::middleware(['auth','checkpermission'])->group(function () {
         Route::get('/edit/{id}', [PersonalDetailsController::class, 'edit'])->name('person.edit');
         Route::post('/update/{id}', [PersonalDetailsController::class, 'update'])->name('person.update');
         Route::delete('/destroy/{id}', [PersonalDetailsController::class, 'destroy'])->name('person.destroy');
+    });
+    Route::prefix('payment')->group(function () {
+        Route::get('/index', [PaymentManageController::class, 'index'])->name('payment_dashboard.index');
     });
 });
 

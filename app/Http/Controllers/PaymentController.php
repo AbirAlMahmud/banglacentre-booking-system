@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use Exception;
 use Stripe\Charge;
 use Stripe\Stripe;
+use App\Models\User;
 use App\Models\Dashboard;
+use App\Models\HallManage;
 use App\Models\SearchPage;
+use App\Models\ShiftsModel;
 use Illuminate\Http\Request;
+use App\Models\BookingManage;
+use App\Models\PaymentManage;
 use App\Models\PersonalDetails;
 use Illuminate\Support\Facades\Session;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
@@ -18,7 +23,8 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        return view('backend.payment');
+        $bookingmanage = BookingManage::find(2);
+        return view('backend.payment', compact('bookingmanage'));
     }
 
     public function confirmpage()
@@ -31,14 +37,23 @@ class PaymentController extends Controller
     {
         Stripe::setApiKey("sk_test_51NhzgxDLuce6dgBfhkXakAQE1HR076sag7ejtqiJicLeOgiCYWsaLmEkeBN4z3J5WAJ8HKxIoEJOJ1zLrRZfBh2R00ohnZX3qZ");
 
-        $charge = Charge::create([
-            'amount' => 1000, // Amount in cents
+        $bookingmanage = BookingManage::find(1);
+        Charge::create([
+            'amount' => $bookingmanage->amount, // Amount in cents
             'currency' => 'gbp',
             'source' => $request->stripeToken,
             'description' => 'Example Charge',
         ]);
 
         // Handle successful payment, redirect or show a success message
+
+        PaymentManage::create([
+            'user_id' => 1,
+            'hall_manage_id' => 2,
+            'booking_manage_id' => 3,
+            'payment_type' => 'Stripe',
+            'status' => 'Pending',
+        ]);
 
         return redirect()->route('confirmpage')->withMessage('Payment Successful');
     }
@@ -50,6 +65,8 @@ class PaymentController extends Controller
 
     public function processTransaction(Request $request)
     {
+        $bookingmanage = BookingManage::find(2);
+
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $paypalToken = $provider->getAccessToken();
@@ -62,8 +79,8 @@ class PaymentController extends Controller
             "purchase_units" => [
                 0 => [
                     "amount" => [
-                        "currency_code" => "GBP",
-                        "value" => 1000,
+                        "currency_code" => "USD",
+                        "value" => $bookingmanage->amount,
                     ]
                 ]
             ]
@@ -92,6 +109,14 @@ class PaymentController extends Controller
         $provider->getAccessToken();
         $response = $provider->capturePaymentOrder($request['token']);
         if (isset($response['status']) && $response['status'] == 'COMPLETED') {
+
+            PaymentManage::create([
+                'user_id' => 1,
+                'hall_manage_id' => 2,
+                'booking_manage_id' => 3,
+                'payment_type' => 'Paypal',
+                'status' => 'Pending',
+            ]);
             return redirect()->route('confirmpage')->withMessage('Payment Successful');
         } else {
             return redirect()

@@ -2,20 +2,26 @@
 
 namespace App\Http\Controllers;
 use Exception;
+
 use Illuminate\Support\Facades\Auth;
 use App\Models\BookingManage;
+
+use App\Models\User;
+
 use App\Models\HallManage;
 use App\Models\ShiftsModel;
 use Illuminate\Http\Request;
+use App\Models\BookingManage;
 
 class BookingManageController extends Controller
 {
     public function index()
     {
-        $bookings = BookingManage::latest()->get();
+        $bookings = BookingManage::with('hallmanages')->latest()->get();
         $shifts = ShiftsModel::latest()->get();
         $hallManages = HallManage::latest()->get();
-        return view('backend.bookings.index', compact('bookings','shifts','hallManages'));
+        $users = User::latest()->get();
+        return view('backend.bookings.index', compact('bookings','shifts','hallManages','users'));
     }
 
     public function create()
@@ -29,11 +35,12 @@ class BookingManageController extends Controller
     public function store(Request $request)
     {
         try {
+
             $selected_Shift = ShiftsModel::findOrFail( $request->input('shifts_model_id'));
             // Calculate the duration in hours
             $in_Time = new \DateTime($selected_Shift->in_time);
             $out_Time = new \DateTime($selected_Shift->out_time);
-            
+
             $existingBooking = BookingManage::join('shifts_models', 'booking_manages.shifts_model_id', '=', 'shifts_models.id')
                 ->where('booking_manages.hall_manage_id', $request->hall_manage_id)
                 ->where('booking_manages.check_in_date', '<=', $request->input('check_out_date'))
@@ -42,12 +49,12 @@ class BookingManageController extends Controller
                 ->where('shifts_models.in_time', '<=', $in_Time)
                 ->where('shifts_models.out_time', '>=', $out_Time)
                 ->first();
-            
+
             if ($existingBooking) {
                 // A conflicting booking already exists
                 return response()->json(['message' => 'The selected dates and times are not available.'], 422);
             }
-            
+
 
 
             $booking = new BookingManage();
@@ -59,7 +66,7 @@ class BookingManageController extends Controller
             $booking->booking_date = now();
             $booking->shifts_model_id = $request->input('shifts_model_id');
             $booking->status = 'pending';
-            
+
             $hall = HallManage::findOrFail($request->hall_manage_id);
 
             // Calculate the number of days
@@ -96,7 +103,7 @@ class BookingManageController extends Controller
             return redirect()->back()->withError($e->getMessage());
         }
     }
-    
+
 
     public function edit($id)
     {
