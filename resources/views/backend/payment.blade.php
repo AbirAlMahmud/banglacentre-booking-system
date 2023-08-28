@@ -155,7 +155,7 @@
     <div class="container p-md-5">
         <div class="card">
             <div class="card-top border-bottom text-center">
-                <span id="logo">Payment</span>
+
             </div>
             <div class="card-body p-5">
 
@@ -194,7 +194,7 @@
                             <p>2 items</p>
                             <div class="row item">
                                 <div class="col-4 align-self-center"><img class="img-fluid"
-                                        src="{{ asset('ui/roomlist') }}/img/room/rooms-5.jpg"></div>
+                                        src="{{ asset('ui/halldetails') }}/img/room/room-2.jpg"></div>
                                 <div class="col-8">
                                     <div class="row"><b>$ 26.99</b></div>
                                     <div class="row text-muted">Be Legandary Lipstick-Nude rose</div>
@@ -203,7 +203,7 @@
                             </div>
                             <div class="row item">
                                 <div class="col-4 align-self-center"><img class="img-fluid"
-                                        src="{{ asset('ui/roomlist') }}/img/room/rooms-5.jpg"></div>
+                                        src="{{ asset('ui/halldetails') }}/img/room/room-2.jpg"></div>
                                 <div class="col-8">
                                     <div class="row"><b>$ 19.99</b></div>
                                     <div class="row text-muted">Be Legandary Lipstick-Sheer Navy Cream</div>

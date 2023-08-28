@@ -6,7 +6,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header d-flex">
-               Booking 
+               Booking
                 <a class="btn btn-sm btn-outline-primary ms-5" href="{{ route('booking.create') }}">Add New Booking</a>
             </div>
             <div class="card-body">
@@ -33,13 +33,13 @@
                         @foreach ($bookings as $booking)
                         <tr>
                             <th scope="row">{{ $booking->id }}</th>
-                            <td>{{ $booking->user_id ?? '' }}</td>
-                            <td>{{ $booking->hall_manage_id ?? '' }}</td>
+                            <td>{{ $booking->users->name ?? '' }}</td>
+                            <td>{{ $booking->hallmanages->hall_name ?? '' }}</td>
                             <td>{{ $booking->check_in_date ?? '' }}</td>
                             <td>{{ $booking->check_out_date ?? '' }}</td>
                             <td>{{ $booking->booking_date ?? '' }}</td>
                             <td>{{ $booking->organization_type == 1 ? 'Charity' : 'Non Charity' }}</td>
-                            <td>{{ $booking->shifts_model_id ?? '' }}</td>
+                            <td>{{ $booking->shifts->name ?? '' }}</td>
                             <td>{{ $booking->amount ?? '' }}</td>
                             <td>{{ $booking->status ?? '' }}</td>
                             <td>
