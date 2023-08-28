@@ -32,6 +32,7 @@ class SearchPageRequest extends FormRequest
             'price' => 'required',
             'description' => 'required',
             'image' => 'required',
+            'discount' => 'required',
         ];
     }
 }
