@@ -75,7 +75,7 @@
                                                 <option value="Half Day">Select Shift</option>
                                                @foreach ($shifts as $shift )
                                                <option value="{{ $shift->id}}">
-                                                {{ date('h:i A', strtotime($shift->in_time)) }} - {{ date('h:i A', strtotime($shift->out_time)) }}
+                                                {{ date('h:i A', strtotime($shift->in_time)) }} - {{ date('h:i A', strtotime($shift->out_time)) }} 
                                             </option>                                                @endforeach
 
                                             </select>

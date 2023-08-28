@@ -19,7 +19,7 @@ class SearchResultController extends Controller
         // Calculate the duration in hours
         $in_Time = new \DateTime($selected_Shift->in_time);
         $out_Time = new \DateTime($selected_Shift->out_time);
-
+        
         $existingBooking = BookingManage::join('shifts_models', 'booking_manages.shifts_model_id', '=', 'shifts_models.id')
             ->where('booking_manages.hall_manage_id', $request->hall)
             ->where('booking_manages.check_in_date', '<=', $request->input('check_out_date'))
