@@ -30,18 +30,19 @@ class BookingManageController extends Controller
     {
         try {
 
-            $inputInTime = $request->input('in_time');
-            $inputOutTime = $request->input('out_time');
             
-            // Convert input time strings to DateTime objects
-            $inputInTimeDT = new \DateTime($inputInTime);
-            $inputOutTimeDT = new \DateTime($inputOutTime);
+            $selected_Shift = ShiftsModel::findOrFail( $request->input('shifts_model_id'));
+            // Calculate the duration in hours
+            $in_Time = new \DateTime($selected_Shift->in_time);
+            $out_Time = new \DateTime($selected_Shift->out_time);
             
             $existingBooking = BookingManage::join('shifts_models', 'booking_manages.shifts_model_id', '=', 'shifts_models.id')
                 ->where('booking_manages.hall_manage_id', $request->hall_manage_id)
+                ->where('booking_manages.check_in_date', '<=', $request->input('check_out_date'))
+                ->where('booking_manages.check_out_date', '>=', $request->input('check_in_date'))
                 ->where('shifts_models.id', $request->input('shifts_model_id'))
-                ->where('shifts_models.in_time', '<=', $inputOutTimeDT->format('H:i:s'))
-                ->where('shifts_models.out_time', '>=', $inputInTimeDT->format('H:i:s'))
+                ->where('shifts_models.in_time', '<=', $in_Time)
+                ->where('shifts_models.out_time', '>=', $out_Time)
                 ->first();
             
             if ($existingBooking) {
