@@ -26,10 +26,10 @@ use App\Http\Controllers\ShiftController;
 |
 */
 
-Route::get('/', function () {
-    return view('backend.dashboard');
-})->name('homepage');
-Route::get('/home', [HomeController::class, 'index'])->name('home.index');
+
+Route::get('/', [HomeController::class, 'index'])->name('homepage');
+Route::get('/search', [HomeController::class, 'hallSearch'])->name('hallSearch');
+Route::post('/book', [HomeController::class, 'store'])->name('book');
 
 
 Route::get('/dashboard', function () {
@@ -97,7 +97,7 @@ Route::middleware(['auth','checkpermission'])->group(function () {
     });
 });
 
-Route::post('/searchresult', [SearchResultController::class, 'index'])->name('searchresult.index');
+Route::get('/searchresult', [HomeController::class, 'searchresult'])->name('searchresult.index');
 Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
 Route::post('/stripe', [PaymentController::class, 'processPayment'])->name('payment.stripe');
 

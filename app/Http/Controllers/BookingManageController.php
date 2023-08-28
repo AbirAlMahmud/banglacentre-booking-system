@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Exception;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\BookingManage;
 use App\Models\HallManage;
 use App\Models\ShiftsModel;
@@ -29,8 +29,6 @@ class BookingManageController extends Controller
     public function store(Request $request)
     {
         try {
-
-            
             $selected_Shift = ShiftsModel::findOrFail( $request->input('shifts_model_id'));
             // Calculate the duration in hours
             $in_Time = new \DateTime($selected_Shift->in_time);
@@ -53,7 +51,7 @@ class BookingManageController extends Controller
 
 
             $booking = new BookingManage();
-            $booking->user_id = '1';
+            $booking->user_id = Auth::user()->id;
             $booking->hall_manage_id = $request->hall_manage_id;
             $booking->check_in_date = $request->input('check_in_date');
             $booking->check_out_date = $request->input('check_out_date');
