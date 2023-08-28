@@ -9,8 +9,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $halls = Hall::where('status', '!=', 'off')->get();
-        return view('backend.home', compact('halls'));
+        return view('backend.home');
     }
 
     public function hallSearch(Request $request)
@@ -22,7 +21,7 @@ class HomeController extends Controller
         $charity = $request->input('charity');
         $start_time = null;
         $end_times = null;
-    
+
         // If period is 'Custom', set start_time and end_time
         if ($period === 'Custom') {
             $start_time = $request->input('start_time');

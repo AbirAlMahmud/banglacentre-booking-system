@@ -2,7 +2,6 @@
 
 
 use App\Http\Controllers\BookingManageController;
-use App\Http\Controllers\PaymentController;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PdfController;
@@ -12,7 +11,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SearchPageController;
 use App\Http\Controllers\SearchResultController;
 use App\Http\Controllers\PersonalDetailsController;
-use App\Http\Controllers\HallController;
 use App\Http\Controllers\HallManageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShiftController;
@@ -30,7 +28,7 @@ use App\Http\Controllers\ShiftController;
 
 Route::get('/', function () {
     return view('backend.dashboard');
-});
+})->name('homepage');
 Route::get('/home', [HomeController::class, 'index'])->name('home.index');
 
 
@@ -38,22 +36,20 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/admin', function () {
-        return view('');
-    });
+});
+
+Route::middleware(['auth','checkpermission'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('admin.index');
         Route::get('/edit/{id}', [DashboardController::class, 'edit'])->name('dashboard.edit');
         Route::post('/update/{id}', [DashboardController::class, 'update'])->name('dashboard.update');
         Route::delete('/destroy/{id}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
         Route::get('/show/{id}', [DashboardController::class, 'show'])->name('dashboard.show');
-
         Route::get('/pdf', [PdfController::class, 'dashboardPDFGenerate'])->name('dashboard.pdf');
-
     });
     Route::prefix('searchpage')->group(function () {
         Route::get('/index', [SearchPageController::class, 'index'])->name('searchpage.index');
@@ -90,6 +86,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/update/{id}', [BookingManageController::class, 'update'])->name('booking.update');
         Route::delete('/destroy/{id}', [BookingManageController::class, 'destroy'])->name('booking.destroy');
     });
+
     Route::prefix('person-details')->group(function () {
         Route::get('/index', [PersonalDetailsController::class, 'index'])->name('person.index');
         Route::get('/create', [PersonalDetailsController::class, 'create'])->name('person.create');
@@ -122,4 +119,4 @@ Route::get('/customerinfo', function () {
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

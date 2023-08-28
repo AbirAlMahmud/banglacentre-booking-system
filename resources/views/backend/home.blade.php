@@ -34,9 +34,9 @@
                         <h5 for="Hall">Hall</h5>
                         <select style="width: 145px" class="form-control" id="hall" name="hall_name">
                             <option value="">All</option>
-                            @foreach ($halls as $hall)
+                            {{-- @foreach ($halls as $hall)
                                  <option value="{{ $hall->hall_name }}">{{ $hall->hall_name }}</option>
-                             @endforeach
+                             @endforeach --}}
                         </select>
                         @error('hall')
                             <div class="text-danger mt-3">{{ $message }}</div>

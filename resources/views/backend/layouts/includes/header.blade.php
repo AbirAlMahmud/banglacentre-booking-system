@@ -60,7 +60,7 @@
                             <div class="elementor-widget-container">
                                 <div class="elementor-button-wrapper"> <a
                                         class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow"
-                                        href="https://banglacentre.com/newsite/login-registraion/"> <span
+                                        href="{{ route('login') }}"> <span
                                             class="elementor-button-content-wrapper"> <span
                                                 class="elementor-button-text">Login</span> </span> </a> </div>
                             </div>
