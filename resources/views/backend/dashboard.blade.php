@@ -23,7 +23,8 @@
                     </div>
                     <div class="col-md-6 col-md-offset-1">
                         <div class="booking-form">
-                            <form>
+                            <form action="{{ route('hallSearch')}}" method="get">
+                                @csrf
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -37,7 +38,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input name="check_out_date" id="date_picker2" type="date"
+                                            <input name="check_out_date" id="date_picker2"  type="date"
                                                 class="form-control" required>
                                             @error('check_out_date')
                                                 <div class="text-danger mt-3">{{ $message }}</div>
@@ -49,14 +50,16 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
+
                                             <span class="form-label">Hall</span>
                                             <select class="form-control" name="hall">
-                                                <option value="Hall 1">Hall 1</option>
-                                                <option value="Hall 2">Hall 2</option>
-                                                <option value="Hall 3">Hall 3</option>
-                                                <option value="Hall 4">Hall 4</option>
-                                                <option value="Hall 5">Hall 5</option>
+                                                <option value="0">All Hall</option>
+
+                                            @foreach ($halls as $hall)
+                                                <option value="{{ $hall->id}}">{{ $hall->hall_name }}</option>
+                                                @endforeach
                                             </select>
+
                                             @error('hall')
                                                 <div class="text-danger mt-3">{{ $message }}</div>
                                             @enderror
@@ -66,11 +69,15 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <span class="form-label">Shift</span>
+
                                             <select class="form-control" name="shift">
-                                                <option value="Half Day">8:10 - 11:59</option>
-                                                <option value="Full Day">12:00 - 3:00</option>
-                                                <option value="Hour 1">3:00 - 6:00</option>
-                                                <option value="Hour 2">6:00 - 9:00</option>
+
+                                                <option value="Half Day">Select Shift</option>
+                                               @foreach ($shifts as $shift )
+                                               <option value="{{ $shift->id}}">
+                                                {{ date('h:i A', strtotime($shift->in_time)) }} - {{ date('h:i A', strtotime($shift->out_time)) }}
+                                            </option>                                                @endforeach
+
                                             </select>
                                             @error('shift')
                                                 <div class="text-danger mt-3">{{ $message }}</div>
@@ -83,10 +90,10 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <h5>Orgainization Type</h5>
-                                            <input type="radio" id="Non Charity" name="charity" value="Non Charity"
+                                            <input type="radio" id="Non Charity" name="charity" value="0"
                                                 checked>
                                             <label for="Non Charity"> Non Charity</label>
-                                            <input type="radio" id="Charity" name="charity" value="Charity">
+                                            <input type="radio" id="Charity" name="charity" value="1">
                                             <label for="Charity"> Charity</label>
                                             @error('charity')
                                                 <div class="text-danger mt-3">{{ $message }}</div>
@@ -95,7 +102,7 @@
                                     </div>
                                 </div>
                                 <div class="form-btn">
-                                    <button class="submit-btn">Book Now</button>
+                                    <button   class="submit-btn">Find</button>
                                 </div>
                             </form>
                         </div>

@@ -6,34 +6,29 @@ use Exception;
 use App\Models\SearchPage;
 use Illuminate\Http\Request;
 use App\Http\Requests\FindHallRequest;
+use App\Models\BookingManage;
+use App\Models\ShiftsModel;
 
 class SearchResultController extends Controller
 {
     public function index(FindHallRequest $request)
     {
-        $check_in_date = $request->input('check_in_date');
-        $check_out_date = $request->input('check_out_date');
-        $hall = $request->input('hall');
-        $period = $request->input('period');
+
         $charity = $request->input('charity');
+        $selected_Shift = ShiftsModel::findOrFail( $request->input('shift'));
+        // Calculate the duration in hours
+        $in_Time = new \DateTime($selected_Shift->in_time);
+        $out_Time = new \DateTime($selected_Shift->out_time);
 
+        $existingBooking = BookingManage::join('shifts_models', 'booking_manages.shifts_model_id', '=', 'shifts_models.id')
+            ->where('booking_manages.hall_manage_id', $request->hall)
+            ->where('booking_manages.check_in_date', '<=', $request->input('check_out_date'))
+            ->where('booking_manages.check_out_date', '>=', $request->input('check_in_date'))
+            ->where('shifts_models.id', $request->input('shifts_model_id'))
+            ->where('shifts_models.in_time', '<=', $in_Time)
+            ->where('shifts_models.out_time', '>=', $out_Time)
+            ->get();
 
-        $query = SearchPage::query();
-
-        try {
-            if ($check_in_date && $check_out_date && $hall && $period && $charity) {
-                $query->where('check_in_date', 'like', '%' . $check_in_date . '%');
-                $query->where('check_out_date', 'like', '%' . $check_out_date . '%');
-                $query->where('hall', 'like', '%' . $hall . '%');
-                $query->where('period', 'like', '%' . $period . '%');
-                $query->where('booking_type', 'like', '%' . $charity . '%');
-            }
-            $searchpages = $query->get();
-
-            return view('backend.searchresult', compact('searchpages'));
-
-        } catch (Exception $e) {
-            return redirect()->back()->withError($e->getMessage());
-        }
+        return $existingBooking;
     }
 }
