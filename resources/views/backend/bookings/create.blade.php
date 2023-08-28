@@ -14,7 +14,7 @@
                         <div class="col-md mt-3">
                             <label for="hall_manage_id" class="form-label">Hall</label>
                             <select name="hall_manage_id" class="form-control">
-                                <option value="">Select Hall Manage</option>
+                                <option value="">Select Hall</option>
                                 @foreach($hallManages as $hall)
                                     <option value="{{ $hall->id }}">{{ $hall->hall_name }}</option>
                                 @endforeach
@@ -42,11 +42,37 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="row" style="padding-left: 25%; padding-right: 25%" requried>
+                    <div class="row" style="padding-left: 25%; padding-right: 25%">
                         <div class="col-md mt-3">
-                            <label for="out_time" class="form-label">Amount</label>
-                            <input type="time" name="out_time" class="form-control">
-                            @error('out_time')
+                            <label class="form-label">Organization Type:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="organization_type" id="non_charity" value="0" checked>
+                                <label class="form-check-label" for="non_charity">
+                                    Non Charity
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="organization_type" id="charity" value="1">
+                                <label class="form-check-label" for="charity">
+                                    Charity
+                                </label>
+                            </div>
+                            @error('organization_type')
+                                <div class="text-danger mt-3">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    
+                    <div class="row" style="padding-left: 25%; padding-right: 25%" required>
+                        <div class="col-md mt-3">
+                            <label for="shifts_model_id" class="form-label">Shifts</label>
+                            <select name="shifts_model_id" class="form-control">
+                                <option value="">Select Shift</option>
+                                @foreach($shifts as $shift)
+                                    <option value="{{ $shift->id }}">{{ $shift->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('shifts_model_id')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
                         </div>
@@ -54,8 +80,8 @@
                     <div class="row" style="padding-left: 25%; padding-right: 25%">
                         <div class="col-md mt-3">
                             <button type="submit" class="btn btn-sm btn-primary mt-3"><i class="bi bi-check"></i>
-                                Save</button>
-                            <a href="{{ route('shift.index') }}" class="btn btn-sm btn-danger mt-3"><i
+                                Book</button>
+                            <a href="{{ route('booking.index') }}" class="btn btn-sm btn-danger mt-3"><i
                                     class="bi bi-x"></i>
                                 Cancel</a>
                         </div>

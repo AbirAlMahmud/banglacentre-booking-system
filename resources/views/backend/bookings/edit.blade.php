@@ -5,35 +5,66 @@
     @include('backend.layouts2.includes.message')
     <div class="container">
         <div class="card">
-            <h4 class="card-header">Edit Shift</h4>
+            <h4 class="card-header">Edit Booking</h4>
             <div class="card-body">
-                <form action="{{ route('shift.update', $shift->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('booking.update', $booking->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="row" style="padding-left: 25%; padding-right: 25%">
+                    <div class="row" style="padding-left: 25%; padding-right: 25%" required>
                         <div class="col-md mt-3">
-                            <label for="name" class="form-label">Shift Name</label>
-                            <input type="text" name="name" class="form-control" value="{{ $shift->name }}">
-                            @error('name')
+                            <label for="hall_manage_id" class="form-label">Hall</label>
+                            <select name="hall_manage_id" class="form-control">
+                                <option value="">Select Hall Manage</option>
+                                @foreach($hallManages as $hall)
+                                    <option value="{{ $hall->id }}" {{ $booking->hall_manage_id == $hall->id ? 'selected' : '' }}>
+                                        {{ $hall->hall_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('hall_manage_id')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
-                    <div class="row" style="padding-left: 25%; padding-right: 25%">
+                    
+                    <div class="row" style="padding-left: 25%; padding-right: 25%" required>
                         <div class="col-md mt-3">
-                            <label for="in_time" class="form-label">In Time</label>
-                            <input type="time" name="in_time" class="form-control" value="{{ $shift->in_time }}">
-                            @error('in_time')
-                                <div class="text-danger mt-3">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md mt-3">
-                            <label for="out_time" class="form-label">Out Time</label>
-                            <input type="time" name="out_time" class="form-control" value="{{ $shift->out_time }}">
-                            @error('out_time')
+                            <label for="check_in_date" class="form-label">Check-In Date</label>
+                            <input type="date" name="check_in_date" class="form-control" 
+                                   @if(isset($booking->check_in_date)) value="{{ $booking->check_in_date }}" @endif>
+                            @error('check_in_date')
                                 <div class="text-danger mt-3">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
+                    
+                    <div class="row" style="padding-left: 25%; padding-right: 25%" required>
+                        <div class="col-md mt-3">
+                            <label for="check_out_date" class="form-label">Check-Out Date</label>
+                            <input type="date" name="check_out_date" class="form-control" 
+                                   @if(isset($booking->check_out_date)) value="{{ $booking->check_out_date }}" @endif>
+                            @error('check_out_date')
+                                <div class="text-danger mt-3">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    
+                    <div class="row" style="padding-left: 25%; padding-right: 25%" required>
+                        <div class="col-md mt-3">
+                            <label for="shifts_model_id" class="form-label">Shifts</label>
+                            <select name="shifts_model_id" class="form-control">
+                                <option value="">Select Shift</option>
+                                @foreach($shifts as $shift)
+                                    <option value="{{ $shift->id }}" {{ $booking->shifts_model_id == $shift->id ? 'selected' : '' }}>
+                                        {{ $shift->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('shifts_model_id')
+                                <div class="text-danger mt-3">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    
                     <div class="row" style="padding-left: 25%; padding-right: 25%">
                         <div class="col-md mt-3">
                             <button type="submit" class="btn btn-sm btn-primary mt-3"><i class="bi bi-check"></i>
