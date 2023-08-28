@@ -23,7 +23,8 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        return view('backend.payment');
+        $bookingmanage = BookingManage::find(2);
+        return view('backend.payment', compact('bookingmanage'));
     }
 
     public function confirmpage()
@@ -36,8 +37,9 @@ class PaymentController extends Controller
     {
         Stripe::setApiKey("sk_test_51NhzgxDLuce6dgBfhkXakAQE1HR076sag7ejtqiJicLeOgiCYWsaLmEkeBN4z3J5WAJ8HKxIoEJOJ1zLrRZfBh2R00ohnZX3qZ");
 
+        $bookingmanage = BookingManage::find(1);
         Charge::create([
-            'amount' => 1000, // Amount in cents
+            'amount' => $bookingmanage->amount, // Amount in cents
             'currency' => 'gbp',
             'source' => $request->stripeToken,
             'description' => 'Example Charge',
@@ -45,15 +47,10 @@ class PaymentController extends Controller
 
         // Handle successful payment, redirect or show a success message
 
-
-        $bookings = BookingManage::with('hallmanages')->latest()->get();
-        $hallManages = HallManage::latest()->get();
-        $users = User::latest()->get();
-
         PaymentManage::create([
-            'user_id' => $users->id,
-            'hall_manage_id' => $hallManages->id,
-            'booking_manage_id' => $bookings->id,
+            'user_id' => 1,
+            'hall_manage_id' => 2,
+            'booking_manage_id' => 3,
             'payment_type' => 'Stripe',
             'status' => 'Pending',
         ]);
@@ -68,6 +65,8 @@ class PaymentController extends Controller
 
     public function processTransaction(Request $request)
     {
+        $bookingmanage = BookingManage::find(2);
+
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $paypalToken = $provider->getAccessToken();
@@ -80,8 +79,8 @@ class PaymentController extends Controller
             "purchase_units" => [
                 0 => [
                     "amount" => [
-                        "currency_code" => "GBP",
-                        "value" => 1000,
+                        "currency_code" => "USD",
+                        "value" => $bookingmanage->amount,
                     ]
                 ]
             ]
@@ -113,9 +112,9 @@ class PaymentController extends Controller
 
             PaymentManage::create([
                 'user_id' => 1,
-                'hall_manage_id' => 1,
-                'booking_manage_id' => 1,
-                'payment_type' => 'Stripe',
+                'hall_manage_id' => 2,
+                'booking_manage_id' => 3,
+                'payment_type' => 'Paypal',
                 'status' => 'Pending',
             ]);
             return redirect()->route('confirmpage')->withMessage('Payment Successful');
