@@ -15,7 +15,7 @@
 
 <section style="background-color: #eee;">
   <div class="container py-5">
-    <form action="{{ route('book') }}" method="post">
+    <form action="{{ route('book_now') }}" method="post">
         @csrf
         @method("POST")
         <input type="hidden" name="check_out_date" value="{{ $check_out_date_view }}">
@@ -67,8 +67,8 @@
 
                   </div>
                 <div class="d-flex flex-column mt-4">
-                  <button class="btn btn-success btn-sm" type="submit">Details</button>
-
+                  <button class="btn btn-success btn-sm" type="submit" style="width: 100px">Book Now</button>
+                  <a href="{{ route('halldetails') }}" class="btn btn-success btn-sm mt-2" style="width: 100px">Details</a>
                 </div>
               </div>
             </div>
