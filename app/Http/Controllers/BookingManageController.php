@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use Exception;
 
 use Illuminate\Support\Facades\Auth;
-use App\Models\BookingManage;
 
 use App\Models\User;
 

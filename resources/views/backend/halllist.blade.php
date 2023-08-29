@@ -115,7 +115,11 @@
                   </div>
 
                   <div class="d-flex flex-column mt-4">
+                    @if(auth()->check()) <!-- Check if the user is authenticated -->
                     <button class="btn btn-success btn-sm" type="submit" style="width: 100px">Book Now</button>
+                    @else
+                        <a href="{{ route('login') }}" class="btn btn-primary btn-sm" style="width: 100px">Login to Book</a>
+                    @endif
                     <a href="{{ route('halldetails') }}" class="btn btn-success btn-sm mt-2" style="width: 100px">Details</a>
                   </div>
                 </div>
