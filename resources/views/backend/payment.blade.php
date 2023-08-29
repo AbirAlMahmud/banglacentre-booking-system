@@ -1,15 +1,17 @@
 @extends('backend.layouts.master')
 
 @section('main_content')
+
+@include('backend.layouts2.includes.message')
+
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
 
 
     <style>
-        .card-top {
-            padding: 0.7rem 5rem;
-        }
+
 
         .card-top a {
             float: left;
@@ -23,7 +25,6 @@
         }
 
         .card-body {
-            padding: 0 5rem 5rem 5rem;
             background-image: url("https://i.imgur.com/4bg1e6u.jpg");
             background-size: cover;
             background-repeat: no-repeat;
@@ -31,7 +32,6 @@
 
         @media(max-width:768px) {
             .card-body {
-                padding: 0 1rem 1rem 1rem;
                 background-image: url("https://i.imgur.com/4bg1e6u.jpg");
                 background-size: cover;
                 background-repeat: no-repeat;
@@ -47,7 +47,6 @@
         }
 
         .upper {
-            padding: 1rem 0;
             justify-content: space-evenly;
         }
 
@@ -159,35 +158,7 @@
             </div>
             <div class="card-body p-5">
 
-                <div class="row">
-                    <div class="col-md-7">
-                        <div class="left border">
-                            <div class="row">
-                                <span class="header">Payment</span>
-                                <div class="icons">
-                                    <img src="https://img.icons8.com/color/48/000000/visa.png" />
-                                    <img src="https://img.icons8.com/color/48/000000/mastercard-logo.png" />
-                                    <img src="https://img.icons8.com/color/48/000000/maestro.png" />
-                                </div>
-                            </div>
-                            <form>
-                                <span>Cardholder's name:</span>
-                                <input placeholder="Linda Williams">
-                                <span>Card Number:</span>
-                                <input placeholder="0125 6780 4567 9909">
-                                <div class="row">
-                                    <div class="col-4"><span>Expiry date:</span>
-                                        <input placeholder="YY/MM">
-                                    </div>
-                                    <div class="col-4"><span>CVV:</span>
-                                        <input id="cvv">
-                                    </div>
-                                </div>
-                                <input type="checkbox" id="save_card" class="align-left">
-                                <label for="save_card">Save card details to wallet</label>
-                            </form>
-                        </div>
-                    </div>
+                <div class="row justify-content-center">
                     <div class="col-md-5">
                         <div class="right border">
                             <div class="header">Order Summary</div>

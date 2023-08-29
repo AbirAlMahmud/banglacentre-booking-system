@@ -42,10 +42,10 @@
                 <h4>{{ $hall->hall_name}}</h4>
                 <input type="hidden" value="{{ $hall->id}}" name="hall_manage_id">
                 <div class="d-flex flex-row">
-                  
+
                   <span>{{ $hall->capacity }}</span>
                 </div>
-              
+
                 <p class="text-truncate mb-4 mb-md-0">
                   {{ $hall->hall_description}}
                 </p>
@@ -68,7 +68,7 @@
                   </div>
                 <div class="d-flex flex-column mt-4">
                   <button class="btn btn-success btn-sm" type="submit">Details</button>
-                
+
                 </div>
               </div>
             </div>
@@ -95,14 +95,14 @@
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-6">
                   <h4>{{ $hallInfo->hall_name}}</h4>
-  
+
                   <div class="d-flex flex-row">
-                    
+
                     <span>{{ $hallInfo->capacity }}</span>
                   </div>
-                
+
                   <p class="text-truncate mb-4 mb-md-0">
-                    {{ $hallInfo->hall_description}}
+                    {!! $hallInfo->hall_description !!}
                   </p>
                 </div>
                 <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
@@ -113,9 +113,10 @@
                     <h4 class="mb-1 me-1">{{ $hallInfo->price * $numberOfDays }}$</h4>
                     @endif
                   </div>
-                  
+
                   <div class="d-flex flex-column mt-4">
-                    <button class="btn btn-success btn-sm" type="submit">Details</button>
+                    <button class="btn btn-success btn-sm" type="submit" style="width: 100px">Book Now</button>
+                    <a href="{{ route('halldetails') }}" class="btn btn-success btn-sm mt-2" style="width: 100px">Details</a>
                   </div>
                 </div>
               </div>

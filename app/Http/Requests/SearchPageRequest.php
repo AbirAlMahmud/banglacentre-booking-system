@@ -25,14 +25,7 @@ class SearchPageRequest extends FormRequest
             'check_in_date' => 'required',
             'check_out_date' => 'required',
             'hall' => 'required',
-            'period' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required',
-            'booking_type' => 'required',
-            'price' => 'required',
-            'description' => 'required',
-            'image' => 'required',
-            'discount' => 'required',
+            'shift' => 'required|not_in:Half Day',
         ];
     }
 }

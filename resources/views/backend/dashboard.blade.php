@@ -18,12 +18,13 @@
                     <div class="col-md-5">
                         <div class="booking-cta">
                             <h1>Make your reservation</h1>
-                            <p>Here are the best hall booking sites, including recommendations for finding low-priced hall rooms.</p>
+                            <p>Here are the best hall booking sites, including recommendations for finding low-priced hall
+                                rooms.</p>
                         </div>
                     </div>
                     <div class="col-md-6 col-md-offset-1">
                         <div class="booking-form">
-                            <form action="{{ route('hallSearch')}}" method="get">
+                            <form action="{{ route('hallSearch') }}" method="post">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
@@ -38,7 +39,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input name="check_out_date" id="date_picker2"  type="date"
+                                            <input name="check_out_date" id="date_picker2" type="date"
                                                 class="form-control" required>
                                             @error('check_out_date')
                                                 <div class="text-danger mt-3">{{ $message }}</div>
@@ -55,8 +56,8 @@
                                             <select class="form-control" name="hall">
                                                 <option value="0">All Hall</option>
 
-                                            @foreach ($halls as $hall)
-                                                <option value="{{ $hall->id}}">{{ $hall->hall_name }}</option>
+                                                @foreach ($halls as $hall)
+                                                    <option value="{{ $hall->id }}">{{ $hall->hall_name }}</option>
                                                 @endforeach
                                             </select>
 
@@ -73,10 +74,12 @@
                                             <select class="form-control" name="shift">
 
                                                 <option value="Half Day">Select Shift</option>
-                                               @foreach ($shifts as $shift )
-                                               <option value="{{ $shift->id}}">
-                                                {{ date('h:i A', strtotime($shift->in_time)) }} - {{ date('h:i A', strtotime($shift->out_time)) }} 
-                                            </option>                                                @endforeach
+                                                @foreach ($shifts as $shift)
+                                                    <option value="{{ $shift->id }}">
+                                                        {{ date('h:i A', strtotime($shift->in_time)) }} -
+                                                        {{ date('h:i A', strtotime($shift->out_time)) }}
+                                                    </option>
+                                                @endforeach
 
                                             </select>
                                             @error('shift')
@@ -90,8 +93,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <h5>Orgainization Type</h5>
-                                            <input type="radio" id="Non Charity" name="charity" value="0"
-                                                checked>
+                                            <input type="radio" id="Non Charity" name="charity" value="0" checked>
                                             <label for="Non Charity"> Non Charity</label>
                                             <input type="radio" id="Charity" name="charity" value="1">
                                             <label for="Charity"> Charity</label>
@@ -102,7 +104,7 @@
                                     </div>
                                 </div>
                                 <div class="form-btn">
-                                    <button   class="submit-btn">Find</button>
+                                    <button class="submit-btn">Find</button>
                                 </div>
                             </form>
                         </div>

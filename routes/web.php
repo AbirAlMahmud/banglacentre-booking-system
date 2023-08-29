@@ -29,7 +29,7 @@ use App\Http\Controllers\ShiftController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('homepage');
-Route::get('/search', [HomeController::class, 'hallSearch'])->name('hallSearch');
+Route::post('/search', [HomeController::class, 'hallSearch'])->name('hallSearch');
 Route::post('/book', [HomeController::class, 'store'])->name('book');
 
 
@@ -117,7 +117,7 @@ Route::get('/halllist', function () {
 });
 Route::get('/halldetails', function () {
     return view('backend.halldetails');
-});
+})->name('halldetails');
 Route::get('/customerinfo', function () {
     return view('backend.customerinfo');
 });
