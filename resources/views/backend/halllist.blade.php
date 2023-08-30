@@ -132,7 +132,7 @@
                     @php
                     session()->put('halllist_price', $hallInfo->price * $numberOfDays);
                     @endphp
-                    
+                    @endif
                   </div>
 
                   <div class="d-flex flex-column mt-4">

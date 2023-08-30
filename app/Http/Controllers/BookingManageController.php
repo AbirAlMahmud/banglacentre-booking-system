@@ -9,6 +9,7 @@ use App\Models\User;
 
 use App\Models\HallManage;
 use App\Models\ShiftsModel;
+use App\Models\BookingManage;
 use Illuminate\Http\Request;
 
 class BookingManageController extends Controller
