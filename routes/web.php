@@ -30,7 +30,8 @@ use App\Http\Controllers\ShiftController;
 
 Route::get('/', [HomeController::class, 'index'])->name('homepage');
 Route::post('/search', [HomeController::class, 'hallSearch'])->name('hallSearch');
-Route::post('/book', [HomeController::class, 'store'])->middleware(['logincheck'])->name('book_now');
+Route::post('/book', [HomeController::class, 'store'])->name('book_now');
+
 
 
 Route::get('/dashboard', function () {

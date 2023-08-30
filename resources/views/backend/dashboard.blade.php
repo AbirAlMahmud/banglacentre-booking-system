@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-md-6 col-md-offset-1">
                         <div class="booking-form">
-                            <form action="{{ route('hallSearch') }}" method="post">
+                            <form action="{{ route('hallSearch') }}" method="get">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">

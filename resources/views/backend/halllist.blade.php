@@ -108,6 +108,7 @@
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-6">
                   <h4>{{ $hallInfo->hall_name}}</h4>
+                  <input type="hidden" value="{{ $hallInfo->id}}" name="hall_manage_id">
 
                   <div class="d-flex flex-row">
 
@@ -120,6 +121,7 @@
                 </div>
                 <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
                   <div class="d-flex flex-row align-items-center mb-1">
+
                     @if (isset($discount_price))
                     <h4 class="mb-1 me-1">${{ $discount_price * $numberOfDays }}</h4>
                     @php
@@ -130,12 +132,17 @@
                     @php
                     session()->put('halllist_price', $hallInfo->price * $numberOfDays);
                     @endphp
-                    @endif
+                    
                   </div>
 
                   <div class="d-flex flex-column mt-4">
+                    @if(auth()->check()) <!-- Check if the user is authenticated -->
                     <button class="btn btn-success btn-sm" type="submit" style="width: 100px">Book Now</button>
-                    <a href="{{ route('halldetails', $hallInfo->id) }}" class="btn btn-success btn-sm mt-2" style="width: 100px">Details</a>
+
+                    @else
+                        <a href="{{ route('login') }}" class="btn btn-primary btn-sm" style="width: 100px">Login to Book</a>
+                    @endif
+                    <a href="{{ route('halldetails') }}" class="btn btn-success btn-sm mt-2" style="width: 100px">Details</a>
                   </div>
                 </div>
               </div>
