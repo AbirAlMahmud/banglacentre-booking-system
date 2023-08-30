@@ -58,12 +58,12 @@ class HomeController extends Controller
 
             if ($request->hall != 0) {
                 $query->where('booking_manages.hall_manage_id', $request->hall);
-            
+
             }
             $existingBooking = $query->get();
 
             $bookingCount = $existingBooking->count();
-            
+
             $check_in_date_view=$request->check_in_date;
             $check_out_date_view=$request->check_out_date;
             $shift_view=$request->shift;
@@ -103,7 +103,9 @@ class HomeController extends Controller
 
                     }
             } else {
-                return redirect()->back()->withMessage('In this date and shift hall not available !!');
+
+                return redirect()->back()->with('message', 'In this date and shift hall not available !!');
+
             }
         }
 
@@ -132,8 +134,14 @@ class HomeController extends Controller
             return redirect()->route('payment.index', ['booking' => $booking])->withMessage('Booking is Pending, Please Payment in 1 hour for confirmation');
 
         } catch (Exception $e) {
-            return redirect()->back()->withError();
+            return redirect()->back()->withError('k');
         }
         session_destroy();
+    }
+
+    public function halldetails(){
+        $halllist_id = Session::get('halllist_id');
+        $hallmanage = HallManage::find($halllist_id);
+        return view('backend.halldetails', compact('hallmanage'));
     }
 }

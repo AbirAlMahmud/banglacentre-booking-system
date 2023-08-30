@@ -2,8 +2,6 @@
 
 
 @section('main_content')
-    @include('backend.layouts2.includes.message')
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
@@ -24,7 +22,14 @@
                     </div>
                     <div class="col-md-6 col-md-offset-1">
                         <div class="booking-form">
-                            <form action="{{ route('hallSearch') }}" method="get">
+
+                            @if(session('message'))
+                            <div class="alert alert-danger">
+                                {{ session('message') }}
+                            </div>
+                        @endif
+
+                            <form action="{{ route('hallSearch') }}" method="post">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
