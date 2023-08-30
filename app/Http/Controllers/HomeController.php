@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Exception;
-use App\Models\Hall;
 
 use App\Models\HallManage;
 use App\Models\ShiftsModel;
@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use App\Models\BookingManage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\SearchPageRequest;
+use Illuminate\Support\Facades\Session;
+
 use Illuminate\Console\Scheduling\Schedule;
 use App\Jobs\UpdateBookingStatus;
 
@@ -32,20 +34,18 @@ class HomeController extends Controller
     {
         $halls = HallManage::latest()->get();
         $shifts = ShiftsModel::latest()->get();
-        return view('backend.dashboard', compact('halls','shifts'));
-
+        return view('backend.dashboard', compact('halls', 'shifts'));
     }
     public function searchresult()
     {
         $halls = HallManage::latest()->get();
         $shifts = ShiftsModel::latest()->get();
-        return view('backend.searchresult', compact('halls','shifts'));
-
+        return view('backend.searchresult', compact('halls', 'shifts'));
     }
 
     public function hallSearch(SearchPageRequest $request)
     {
-        $charity = $request->input('shifts_model_id');
+       $charity = $request->input('shifts_model_id');
             $charity = $request->input('charity');
             $selected_Shift = ShiftsModel::findOrFail( $request->input('shift'));
             // Calculate the duration in hours
@@ -107,14 +107,18 @@ class HomeController extends Controller
             }
         }
 
-        public function store(Request $request)
+
+    public function store(Request $request)
     {
+        $halllist_id = Session::get('halllist_id');
+        $halllist_price = Session::get('halllist_price');
         try {
 
             $booking = new BookingManage();
             $booking->user_id = Auth::user()->id;
-            $booking->hall_manage_id = $request->input('hall_manage_id');
-            $booking->amount =  $request->input('calculated_price');
+            $booking->hall_manage_id = $halllist_id;
+            $booking->amount = $halllist_price;
+
             $booking->check_in_date = $request->input('check_in_date');
             $booking->check_out_date = $request->input('check_out_date');
             $booking->organization_type = ($request->input('charity') == 1) ? 'charity' : 'non-charity';
@@ -125,11 +129,13 @@ class HomeController extends Controller
 
             UpdateBookingStatus::dispatch($booking)->delay(now()->addSeconds(3600));
 
-            return redirect()->route('payment.index')->withMessage('Booking is Pending, Pelase Payment in 1hour for confirmation');
+
+            $booking->save();
+            return redirect()->route('payment.index', ['booking' => $booking])->withMessage('Booking is Pending, Please Payment in 1 hour for confirmation');
+
         } catch (Exception $e) {
-            return redirect()->back()->withError($e->getMessage());
+            return redirect()->back()->withError();
         }
+        session_destroy();
     }
-
-
 }

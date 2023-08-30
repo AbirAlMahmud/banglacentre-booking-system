@@ -148,10 +148,9 @@
         #cvv:hover {}
     </style>
 
-
 <div style="background-image: url('{{ asset('ui/searchpage') }}/img/background.jpg'); object-fit: cover;">
 
-    <div class="container p-md-5">
+    <div class="container p-md-5" style="padding-left: 20% !important; padding-right: 20% !important">
         <div class="card">
             <div class="card-top border-bottom text-center">
 
@@ -159,40 +158,27 @@
             <div class="card-body p-5">
 
                 <div class="row justify-content-center">
-                    <div class="col-md-5">
+                    <div class="col-md-12">
                         <div class="right border">
                             <div class="header">Order Summary</div>
-                            <p>2 items</p>
+                            <h5>{{ $booking->hallmanages->hall_name }}</h5>
                             <div class="row item">
                                 <div class="col-4 align-self-center"><img class="img-fluid"
-                                        src="{{ asset('ui/halldetails') }}/img/room/room-2.jpg"></div>
+                                        src="{{ asset('uploads/images/' . $booking->hallmanages->image) }}"></div>
                                 <div class="col-8">
-                                    <div class="row"><b>$ 26.99</b></div>
-                                    <div class="row text-muted">Be Legandary Lipstick-Nude rose</div>
-                                    <div class="row">Qty:1</div>
-                                </div>
-                            </div>
-                            <div class="row item">
-                                <div class="col-4 align-self-center"><img class="img-fluid"
-                                        src="{{ asset('ui/halldetails') }}/img/room/room-2.jpg"></div>
-                                <div class="col-8">
-                                    <div class="row"><b>$ 19.99</b></div>
-                                    <div class="row text-muted">Be Legandary Lipstick-Sheer Navy Cream</div>
-                                    <div class="row">Qty:1</div>
+                                    <div class="row"><b>Price: {{ $booking->amount }}</b></div>
+                                    <div class="row text-muted">{!! $booking->hallmanages->hall_description !!}</div>
+                                    <div class="row">Booking Date: {{ $booking->booking_date }}</div>
                                 </div>
                             </div>
                             <hr>
                             <div class="row lower">
                                 <div class="col text-left">Subtotal</div>
-                                <div class="col text-right">$ 46.98</div>
-                            </div>
-                            <div class="row lower">
-                                <div class="col text-left">Delivery</div>
-                                <div class="col text-right">Free</div>
+                                <div class="col text-right">{{ $booking->amount }}</div>
                             </div>
                             <div class="row lower">
                                 <div class="col text-left"><b>Total to pay</b></div>
-                                <div class="col text-right"><b>$ 46.98</b></div>
+                                <div class="col text-right"><b>{{ $booking->amount }}</b></div>
                             </div>
 
 
@@ -214,7 +200,7 @@
                                         </div>
                                     @endif
 
-                                    <a href="{{ route('processTransaction') }}" class="btn btn-primary">Pay
+                                    <a href="{{ route('processTransaction') }}" class="btn btn-primary" style="padding-top: 8px; padding-bottom: 8px; font-size: 11px; font-weight: bold;">Pay
                                         with PayPal</a>
 
 

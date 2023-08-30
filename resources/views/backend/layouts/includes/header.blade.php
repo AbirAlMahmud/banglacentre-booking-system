@@ -62,7 +62,7 @@
                                         class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow"
                                         href="{{ route('login') }}"> <span
                                             class="elementor-button-content-wrapper"> <span
-                                                class="elementor-button-text">Login</span> </span> </a> </div>
+                                                class="elementor-button-text">{{ Auth::user()->name ?? 'Login' }}</span> </span> </a> </div>
                             </div>
                         </div>
                     </div>
