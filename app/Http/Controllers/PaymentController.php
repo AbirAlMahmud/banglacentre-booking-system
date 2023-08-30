@@ -14,9 +14,10 @@ use Illuminate\Http\Request;
 use App\Models\BookingManage;
 use App\Models\PaymentManage;
 use App\Models\PersonalDetails;
+use App\Jobs\UpdateBookedStatus;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
-use Illuminate\Support\Facades\Auth;
 
 
 
@@ -31,11 +32,6 @@ class PaymentController extends Controller
         return view('backend.payment', compact('booking'));
     }
 
-    public function confirmpage()
-    {
-        return view('backend.confirmpage');
-    }
-
 
     public function processPayment(Request $request)
     {
@@ -43,12 +39,15 @@ class PaymentController extends Controller
 
         $user_id = Auth::id();
 
+        $user = User::find($user_id);
+
+
         $bookingmanage = BookingManage::where('user_id', $user_id)
         ->where('status', 'pending')
-        ->latest() 
+        ->latest()
         ->first();
 
-        Charge::create([
+        $charge = Charge::create([
             'amount' => $bookingmanage->amount, // Amount in cents
             'currency' => 'USD',
             'source' => $request->stripeToken,
@@ -57,7 +56,7 @@ class PaymentController extends Controller
 
         // Handle successful payment, redirect or show a success message
 
-        
+
         if ($bookingmanage) {
             $payment = new PaymentManage();
             $payment->user_id = $user_id;
@@ -72,9 +71,20 @@ class PaymentController extends Controller
         } else {
             return 'fail insert in payment table';
         }
-      
 
-        return redirect()->route('confirmpage')->withMessage('Payment Successful');
+        $user_id = Auth::id();
+
+        $user = User::find($user_id);
+
+
+        $bookingmanage = BookingManage::where('user_id', $user_id)
+        ->where('status', 'pending')
+        ->latest()
+        ->first();
+
+
+        session()->flash('message', 'Payment Successful');
+        return view('backend.confirmpage', compact('payment', 'user','bookingmanage'));
     }
 
 
@@ -84,8 +94,13 @@ class PaymentController extends Controller
 
     public function processTransaction(Request $request)
     {
-        $bookingmanage = BookingManage::find(2);
 
+        $user_id = Auth::id();
+
+        $bookingmanage = BookingManage::where('user_id', $user_id)
+        ->where('status', 'pending')
+        ->latest()
+        ->first();
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $paypalToken = $provider->getAccessToken();
@@ -123,6 +138,11 @@ class PaymentController extends Controller
 
     public function successTransaction(Request $request)
     {
+        $user_id = Auth::id();
+
+        $user = User::find($user_id);
+
+
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $provider->getAccessToken();
@@ -132,23 +152,37 @@ class PaymentController extends Controller
 
             $bookingmanage = BookingManage::where('user_id', $user_id)
             ->where('status', 'pending')
-            ->latest() 
+            ->latest()
             ->first();
             if ($bookingmanage) {
                 $payment = new PaymentManage();
                 $payment->user_id = $user_id;
                 $payment->hall_manage_id = $bookingmanage->hall_manage_id;
                 $payment->booking_manage_id = $bookingmanage->id;
-                $payment->payment_type = 'Stripe';
+                $payment->payment_type = 'Paypal';
                 $payment->status = 'Paid';
                 $payment->save();
-    
-                $bookingmanage->status = 'Booked';
-                $bookingmanage->save();
+
+                UpdateBookedStatus::dispatch($bookingmanage)->delay(now()->addSeconds(60));
+
             } else {
                 return 'fail insert in payment table';
             }
-            return redirect()->route('confirmpage')->withMessage('Payment Successful');
+
+            $user_id = Auth::id();
+
+            $user = User::find($user_id);
+
+
+            $bookingmanage = BookingManage::where('user_id', $user_id)
+            ->where('status', 'pending')
+            ->latest()
+            ->first();
+            $hall=HallManage::findorfail($bookingmanage->hall_manage_id);
+
+
+            session()->flash('message', 'Payment Successful');
+            return view('backend.confirmpage', compact('payment', 'user', 'hall'));
         } else {
             return redirect()
                 ->route('payment.index')
@@ -164,5 +198,5 @@ class PaymentController extends Controller
     }
 
 
-    
+
 }

@@ -18,7 +18,6 @@
 
     <section style="background-color: #eee;">
         <div class="container py-5">
-            @include('backend.layouts2.includes.message')
             <form action="{{ route('book_now') }}" method="post">
                 @csrf
                 @method('POST')
@@ -33,6 +32,7 @@
                         <div class="row justify-content-center mb-3">
                             <div class="col-md-12 col-xl-10">
                                 <div class="card shadow-0 border rounded-3">
+                                    @include('backend.layouts2.includes.message')
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">

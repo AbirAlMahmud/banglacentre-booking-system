@@ -2,7 +2,7 @@
 
 @section('main_content')
 
-@include('backend.layouts2.includes.message')
+
 
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -152,6 +152,7 @@
 
     <div class="container p-md-5" style="padding-left: 20% !important; padding-right: 20% !important">
         <div class="card">
+            @include('backend.layouts2.includes.message')
             <div class="card-top border-bottom text-center">
 
             </div>
@@ -192,7 +193,6 @@
                                             data-image="https://stripe.com/img/documentation/checkout/marketplace.png" data-locale="auto" data-currency="gbp"
                                             data-panel-label="Pay Now"></script>
                                     </form>
-
 
                                     @if (session()->has('success'))
                                         <div class="alert alert-success">
