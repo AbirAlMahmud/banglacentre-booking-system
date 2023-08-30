@@ -103,7 +103,9 @@ class HomeController extends Controller
 
                     }
             } else {
+
                 return redirect()->back()->with('message', 'In this date and shift hall not available !!');
+
             }
         }
 
@@ -125,12 +127,10 @@ class HomeController extends Controller
             $booking->shifts_model_id = $request->input('shifts_model_id');
             $booking->booking_date = now();
             $booking->status = 'pending';
-            $booking->save();
 
             UpdateBookingStatus::dispatch($booking)->delay(now()->addSeconds(3600));
-
-
             $booking->save();
+            
             return redirect()->route('payment.index', ['booking' => $booking])->withMessage('Booking is Pending, Please Payment in 1 hour for confirmation');
 
         } catch (Exception $e) {

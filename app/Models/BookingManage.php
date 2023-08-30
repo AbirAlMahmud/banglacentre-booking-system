@@ -21,7 +21,7 @@ class BookingManage extends Model
     {
         return $this->belongsTo(ShiftsModel::class,'shifts_model_id','id');
     }
-
+        
     public function users()
     {
         return $this->belongsTo(User::class,'user_id','id');

@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Providers;
-
+use App\Observers\PaymentStatusObserver;
+use App\Models\PaymentManage;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,8 +18,9 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
-    {
-        //
-    }
+
+    public function boot()
+{
+    PaymentManage::observe(PaymentStatusObserver::class);
+}
 }
