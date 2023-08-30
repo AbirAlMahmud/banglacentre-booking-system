@@ -95,6 +95,7 @@
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-6">
                   <h4>{{ $hallInfo->hall_name}}</h4>
+                  <input type="hidden" value="{{ $hallInfo->id}}" name="hall_manage_id">
 
                   <div class="d-flex flex-row">
 
@@ -107,9 +108,13 @@
                 </div>
                 <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
                   <div class="d-flex flex-row align-items-center mb-1">
+
                     @if (isset($discount_price))
+                    <input type="hidden" name="calculated_price" value="{{ $discount_price * $numberOfDays }}">
                     <h4 class="mb-1 me-1">{{ $discount_price * $numberOfDays }}$</h4>
                     @else
+                    <input type="hidden" name="calculated_price" value="{{ $hallInfo->price * $numberOfDays }}">
+
                     <h4 class="mb-1 me-1">{{ $hallInfo->price * $numberOfDays }}$</h4>
                     @endif
                   </div>
