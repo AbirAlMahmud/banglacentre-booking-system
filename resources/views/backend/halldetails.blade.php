@@ -20,7 +20,6 @@
         <meta name="keywords" content="Sona, unica, creative, html">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Sona | Template</title>
 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
@@ -47,12 +46,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="breadcrumb-text">
+                        <div style="text-align: center">
                             <h2>Our Rooms</h2>
-                            <div class="bt-option">
-                                <a href="{{ asset('ui/halldetails') }}/./home.html">Home</a>
-                                <span>Rooms</span>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -63,7 +58,7 @@
         <!-- Room Details Section Begin -->
         <section class="room-details-section spad">
             <div class="container">
-                <div class="row">
+                <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="room-details-item">
                             <img src="{{ asset('ui/halldetails') }}/img/room/room-details.jpg" alt="">
@@ -78,7 +73,6 @@
                                             <i class="icon_star"></i>
                                             <i class="icon_star-half_alt"></i>
                                         </div>
-                                        <a href="{{ asset('ui/halldetails') }}/#">Booking Now</a>
                                     </div>
                                 </div>
                                 <h2>159$<span>/Pernight</span></h2>
@@ -117,36 +111,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="room-booking">
-                            <h3>Your Reservation</h3>
-                            <form action="#">
-                                <div class="check-date">
-                                    <label for="date-in">Check In:</label>
-                                    <input type="text" class="date-input" id="date-in">
-                                    <i class="icon_calendar"></i>
-                                </div>
-                                <div class="check-date">
-                                    <label for="date-out">Check Out:</label>
-                                    <input type="text" class="date-input" id="date-out">
-                                    <i class="icon_calendar"></i>
-                                </div>
-                                <div class="select-option">
-                                    <label for="guest">Guests:</label>
-                                    <select id="guest">
-                                        <option value="">3 Adults</option>
-                                    </select>
-                                </div>
-                                <div class="select-option">
-                                    <label for="room">Room:</label>
-                                    <select id="room">
-                                        <option value="">1 Room</option>
-                                    </select>
-                                </div>
-                                <button type="submit">Check Availability</button>
-                            </form>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </section>

@@ -21,10 +21,12 @@ session_start();
 
 class PaymentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $bookingmanage = BookingManage::find(2);
-        return view('backend.payment', compact('bookingmanage'));
+        $booking_id = $request->query('booking');
+        $booking = BookingManage::find($booking_id);
+
+        return view('backend.payment', compact('booking'));
     }
 
     public function confirmpage()

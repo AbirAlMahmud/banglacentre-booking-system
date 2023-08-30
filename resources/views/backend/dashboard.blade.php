@@ -83,7 +83,7 @@
 
                                             </select>
                                             @error('shift')
-                                                <div class="text-danger mt-3">{{ $message }}</div>
+                                                <div class="text-danger mt-3">Please Select Shift</div>
                                             @enderror
                                             <span class="select-arrow"></span>
                                         </div>

@@ -30,7 +30,7 @@ use App\Http\Controllers\ShiftController;
 
 Route::get('/', [HomeController::class, 'index'])->name('homepage');
 Route::post('/search', [HomeController::class, 'hallSearch'])->name('hallSearch');
-Route::post('/book', [HomeController::class, 'store'])->name('book_now');
+Route::post('/book', [HomeController::class, 'store'])->middleware(['logincheck'])->name('book_now');
 
 
 Route::get('/dashboard', function () {
@@ -114,7 +114,7 @@ Route::get('/cancel-transaction', [PaymentController::class, 'cancelTransaction'
 Route::get('/confirmpage', [PaymentController::class, 'confirmpage'])->name('confirmpage');
 Route::get('/halllist', function () {
     return view('backend.halllist');
-});
+})->name('halllist');
 Route::get('/halldetails', function () {
     return view('backend.halldetails');
 })->name('halldetails');
