@@ -29,7 +29,7 @@ use App\Http\Controllers\ShiftController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('homepage');
-Route::get('/search', [HomeController::class, 'hallSearch'])->name('hallSearch');
+Route::post('/search', [HomeController::class, 'hallSearch'])->name('hallSearch');
 Route::post('/book', [HomeController::class, 'store'])->name('book_now');
 Route::get('/halldetails', [HomeController::class, 'halldetails'])->name('halldetails');
 
@@ -112,12 +112,6 @@ Route::get('/process-transaction', [PaymentController::class, 'processTransactio
 Route::get('/success-transaction', [PaymentController::class, 'successTransaction'])->name('successTransaction');
 Route::get('/cancel-transaction', [PaymentController::class, 'cancelTransaction'])->name('cancelTransaction');
 
-
-Route::get('/confirmpage', [PaymentController::class, 'confirmpage'])->name('confirmpage');
-
-Route::get('/customerinfo', function () {
-    return view('backend.customerinfo');
-});
 
 
 require __DIR__ . '/auth.php';

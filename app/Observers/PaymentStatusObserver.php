@@ -28,12 +28,19 @@ class PaymentStatusObserver
                 $currentDate = now();
                 $checkInDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $bookingmanage->check_in_date . ' ' . $bookingmanage->shifts->in_time);
                 $checkOutDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $bookingmanage->check_out_date . ' ' . $bookingmanage->shifts->out_time);
-                
-                if ($currentDate >= $checkInDateTime && $currentDate <= $checkOutDateTime) {
-                    $bookingmanage->status = 'Booked';
+
+                if ($bookingmanage->status === 'Booked') {
+                    if ($currentDate > $checkOutDateTime) {
+                        $bookingmanage->status = 'Available';
+                    }
                 } else {
-                    $bookingmanage->status = 'Available';
+                    if ($currentDate < $checkInDateTime) {
+                        $bookingmanage->status = 'Available';
+                    } elseif ($currentDate >= $checkInDateTime && $currentDate <= $checkOutDateTime) {
+                        $bookingmanage->status = 'Booked';
+                    }
                 }
+
                 $bookingmanage->save();
             }
         }
