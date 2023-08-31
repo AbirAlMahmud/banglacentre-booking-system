@@ -55,7 +55,8 @@ class HomeController extends Controller
             $query = BookingManage::join('shifts_models', 'booking_manages.shifts_model_id', '=', 'shifts_models.id')
                 ->where('booking_manages.check_in_date', '<=', $request->input('check_out_date'))
                 ->where('booking_manages.check_out_date', '>=', $request->input('check_in_date'))
-                ->where('shifts_models.id', $request->input('shift'));
+                ->where('shifts_models.id', $request->input('shift'))
+                ->where('status', 'pennding');
 
             if ($request->hall != 0) {
                 $query->where('booking_manages.hall_manage_id', $request->hall);

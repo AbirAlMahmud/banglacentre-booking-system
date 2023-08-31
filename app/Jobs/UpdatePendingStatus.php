@@ -30,7 +30,7 @@ class UpdatePendingStatus implements ShouldQueue
     {
         $this->booking->refresh(); // Refresh the booking data from the database
         if ($this->booking->status === 'pending') {
-            $this->booking->status = 'availablepending';
+            $this->booking->status = 'available';
             $this->booking->save();
         }
     }
