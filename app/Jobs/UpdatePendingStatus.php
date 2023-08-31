@@ -9,9 +9,10 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class UpdateBookingStatus implements ShouldQueue
+class UpdatePendingStatus implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     protected $booking;
 
     /**
@@ -20,7 +21,6 @@ class UpdateBookingStatus implements ShouldQueue
     public function __construct($booking)
     {
         $this->booking = $booking;
-
     }
 
     /**
@@ -30,7 +30,7 @@ class UpdateBookingStatus implements ShouldQueue
     {
         $this->booking->refresh(); // Refresh the booking data from the database
         if ($this->booking->status === 'pending') {
-            $this->booking->status = 'available';
+            $this->booking->status = 'availablepending';
             $this->booking->save();
         }
     }

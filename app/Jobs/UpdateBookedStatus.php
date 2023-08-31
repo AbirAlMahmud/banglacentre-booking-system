@@ -32,29 +32,30 @@ class UpdateBookedStatus implements ShouldQueue
         $bookingmanage = $this->bookingmanage;
         $currentDateTime = now();
 
-        // Check if the current date is within the check-in and check-out range
+        $customCheckInDate = Carbon::create(2023, 8, 31, 12, 45); // Replace with your desired check-in date and time
+        $customCheckOutDate = Carbon::create(2023, 8, 31, 12, 47); // Replace with your desired check-out date and time
+
+        // Check if the current date is within the custom check-in and check-out range
         if (
-            $currentDateTime->gte($bookingmanage->check_in_date) &&
-            $currentDateTime->lte($bookingmanage->check_out_date)
+            $currentDateTime->gte($customCheckInDate) &&
+            $currentDateTime->lte($customCheckOutDate)
         ) {
             // Get the in-time and out-time for the shift
-            $inTime = Carbon::parse($bookingmanage->shifts_model->in_time);
-            $outTime = Carbon::parse($bookingmanage->shifts_model->out_time);
+            $inTime = Carbon::create(2023, 8, 31, 12, 50); // Replace with your desired in-time
+            $outTime = Carbon::create(2023, 8, 31, 12, 52); // Replace with your desired out-time
 
-            // Check if the current time is within the in-time and out-time of the shift
+            // Check if the current time is within the custom in-time and out-time of the shift
             if (
                 $currentDateTime->format('H:i') >= $inTime->format('H:i') &&
                 $currentDateTime->format('H:i') <= $outTime->format('H:i')
             ) {
-                $bookingmanage->status = 'Booked';
+                $bookingmanage->status = 'Booked1';
             } else {
-                $bookingmanage->status = 'Available';
+                $bookingmanage->status = 'available1';
             }
         } else {
-            $bookingmanage->status = 'Available';
+            $bookingmanage->status = 'available2';
         }
-
         $bookingmanage->save();
     }
-
 }

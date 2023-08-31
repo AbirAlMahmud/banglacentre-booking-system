@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Providers;
-use App\Observers\PaymentStatusObserver;
 use App\Models\PaymentManage;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +20,5 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
 {
-    PaymentManage::observe(PaymentStatusObserver::class);
 }
 }
