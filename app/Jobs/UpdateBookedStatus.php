@@ -49,12 +49,12 @@ class UpdateBookedStatus implements ShouldQueue
                 $currentDateTime->format('H:i') >= $inTime->format('H:i') &&
                 $currentDateTime->format('H:i') <= $outTime->format('H:i')
             ) {
-                $bookingmanage->status = 'Booked1';
+                $bookingmanage->status = 'Booked';
             } else {
-                $bookingmanage->status = 'available1';
+                $bookingmanage->status = 'available';
             }
         } else {
-            $bookingmanage->status = 'available2';
+            $bookingmanage->status = 'available';
         }
         $bookingmanage->save();
     }
