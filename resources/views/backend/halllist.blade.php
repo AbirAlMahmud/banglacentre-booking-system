@@ -84,7 +84,7 @@
                                                 <div class="d-flex flex-column mt-4">
                                                     <button class="btn btn-success btn-sm" type="submit"
                                                         style="width: 100px">Book Now</button>
-                                                    <a href="{{ route('halldetails') }}"
+                                                    <a href="{{ route('halldetails', $hall->id) }}"
                                                         class="btn btn-success btn-sm mt-2" style="width: 100px">Details</a>
                                                 </div>
                                             </div>
@@ -142,7 +142,7 @@
                                                     @php
                                                         session()->put('halllist_price', $hallInfo->price * $numberOfDays);
                                                     @endphp
-                                                    @endif
+                                                @endif
 
                                             </div>
 
@@ -155,8 +155,8 @@
                                                     <a href="{{ route('login') }}" class="btn btn-primary btn-sm"
                                                         style="width: 130px">Login to Book</a>
                                                 @endif
-                                                <a href="{{ route('halldetails') }}" class="btn btn-success btn-sm mt-2"
-                                                    style="width: 100px">Details</a>
+                                                <a href="{{ route('halldetails', $hallInfo->id) }}"
+                                                    class="btn btn-success btn-sm mt-2" style="width: 100px">Details</a>
                                             </div>
                                         </div>
                                     </div>
@@ -164,7 +164,6 @@
                             </div>
                         </div>
                     </div>
-
                 @endif
             </form>
         </div>
