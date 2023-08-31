@@ -11,6 +11,7 @@ use App\Models\BookingManage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\SearchPageRequest;
 use Illuminate\Support\Facades\Session;
+use App\Jobs\UpdatePendingStatus;
 
 use Illuminate\Console\Scheduling\Schedule;
 use App\Jobs\UpdateBookingStatus;
@@ -128,9 +129,9 @@ class HomeController extends Controller
             $booking->booking_date = now();
             $booking->status = 'pending';
 
-            UpdateBookingStatus::dispatch($booking)->delay(now()->addSeconds(3600));
             $booking->save();
-            
+            UpdatePendingStatus::dispatch($booking)->delay(now()->addSeconds(60));
+
             return redirect()->route('payment.index', ['booking' => $booking])->withMessage('Booking is Pending, Please Payment in 1 hour for confirmation');
 
         } catch (Exception $e) {
@@ -139,9 +140,13 @@ class HomeController extends Controller
         session_destroy();
     }
 
-    public function halldetails(){
-        $halllist_id = Session::get('halllist_id');
-        $hallmanage = HallManage::find($halllist_id);
-        return view('backend.halldetails', compact('hallmanage'));
+    public function halldetails($id1,$id2){
+        if($id1){
+            $hallmanage = HallManage::find($id1);
+            return view('backend.halldetails', compact('hallmanage'));
+        }else{
+            $hallmanage = HallManage::find($id2);
+            return view('backend.halldetails', compact('hallmanage'));
+        }
     }
 }

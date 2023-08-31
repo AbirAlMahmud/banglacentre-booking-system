@@ -82,9 +82,11 @@ class PaymentController extends Controller
         ->latest()
         ->first();
 
+        $hall=HallManage::findorfail($bookingmanage->hall_manage_id);
+        $shift=ShiftsModel::findorfail($bookingmanage->shifts_model_id);
 
         session()->flash('message', 'Payment Successful');
-        return view('backend.confirmpage', compact('payment', 'user','bookingmanage'));
+        return view('backend.confirmpage', compact('payment', 'user','bookingmanage', 'hall', 'shift'));
     }
 
 
@@ -179,10 +181,11 @@ class PaymentController extends Controller
             ->latest()
             ->first();
             $hall=HallManage::findorfail($bookingmanage->hall_manage_id);
+            $shift=ShiftsModel::findorfail($bookingmanage->shifts_model_id);
 
 
             session()->flash('message', 'Payment Successful');
-            return view('backend.confirmpage', compact('payment', 'user', 'hall'));
+            return view('backend.confirmpage', compact('payment', 'user', 'hall', 'bookingmanage', 'shift'));
         } else {
             return redirect()
                 ->route('payment.index')

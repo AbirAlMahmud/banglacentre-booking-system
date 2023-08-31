@@ -55,7 +55,7 @@
                                                 </div>
 
                                                 <p class="text-truncate mb-4 mb-md-0">
-                                                    {{ $hall->hall_description }}
+                                                    {!! $hall->hall_description !!}
                                                 </p>
                                             </div>
                                             <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
@@ -153,7 +153,7 @@
                                                         style="width: 100px">Book Now</button>
                                                 @else
                                                     <a href="{{ route('login') }}" class="btn btn-primary btn-sm"
-                                                        style="width: 100px">Login to Book</a>
+                                                        style="width: 130px">Login to Book</a>
                                                 @endif
                                                 <a href="{{ route('halldetails') }}" class="btn btn-success btn-sm mt-2"
                                                     style="width: 100px">Details</a>

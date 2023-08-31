@@ -31,7 +31,7 @@ use App\Http\Controllers\ShiftController;
 Route::get('/', [HomeController::class, 'index'])->name('homepage');
 Route::post('/search', [HomeController::class, 'hallSearch'])->name('hallSearch');
 Route::post('/book', [HomeController::class, 'store'])->name('book_now');
-Route::get('/halldetails', [HomeController::class, 'halldetails'])->name('halldetails');
+Route::get('/halldetails/{id1}/{id2}', [HomeController::class, 'halldetails'])->name('halldetails');
 
 
 
