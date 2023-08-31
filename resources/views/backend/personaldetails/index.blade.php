@@ -18,7 +18,7 @@
                             <th scope="col">Email</th>
                             <th scope="col">Phone</th>
                             <th scope="col">Address</th>
-                            <th scope="col">Comment</th>
+                            <th scope="col">Role</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
