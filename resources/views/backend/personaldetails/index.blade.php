@@ -26,18 +26,18 @@
                         @php
                         $sl=1;
                         @endphp
-                        @foreach ($personaldetails as $personaldetail)
+                        @foreach ($users as $user)
                         <tr>
                             <th scope="row">{{ $sl++ }}</th>
-                            <td>{{ $personaldetail->name ?? '' }}</td>
-                            <td>{{ $personaldetail->email ?? '' }}</td>
-                            <td>{{ $personaldetail->phone ?? '' }}</td>
-                            <td>{{ $personaldetail->address ?? '' }}</td>
-                            <td>{!! $personaldetail->comment ?? '' !!}</td>
+                            <td>{{ $user->name ?? '' }}</td>
+                            <td>{{ $user->email ?? '' }}</td>
+                            <td>{{ $user->phone ?? '' }}</td>
+                            <td>{{ $user->address ?? '' }}</td>
+                            <td>{{ $user->role ?? '' }}</td>
                             <td>
-                                <a class="btn btn-sm btn-warning" href="{{ route('person.edit',$personaldetail->id) }}">Edit</a>
+                                <a class="btn btn-sm btn-warning" href="{{ route('person.edit',$user->id) }}">Edit</a>
 
-                                <form action="{{ route('person.destroy', $personaldetail->id) }}" method="POST" style="display: inline">
+                                <form action="{{ route('person.destroy', $user->id) }}" method="POST" style="display: inline">
                                     @method('DELETE')
                                     @csrf
                                     <button class="btn btn-sm btn-danger" type="submit">Delete</button>

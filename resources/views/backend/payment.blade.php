@@ -162,24 +162,24 @@
                     <div class="col-md-12">
                         <div class="right border">
                             <div class="header">Order Summary</div>
-                            <h5>{{ $booking->hallmanages->hall_name }}</h5>
+                            <h5>{{ $hall->hall_name }}</h5>
                             <div class="row item">
                                 <div class="col-4 align-self-center"><img class="img-fluid"
-                                        src="{{ asset('uploads/images/' . $booking->hallmanages->image) }}"></div>
+                                        src="{{ asset('uploads/images/' . $hall->image) }}"></div>
                                 <div class="col-8">
-                                    <div class="row"><b>Price: {{ $booking->amount }}</b></div>
-                                    <div class="row text-muted">{!! $booking->hallmanages->hall_description !!}</div>
+                                    <div class="row"><b>Price: ${{ $booking->amount }}</b></div>
+                                    <div class="row text-muted">{!! $hall->hall_description !!}</div>
                                     <div class="row">Booking Date: {{ $booking->booking_date }}</div>
                                 </div>
                             </div>
                             <hr>
                             <div class="row lower">
                                 <div class="col text-left">Subtotal</div>
-                                <div class="col text-right">{{ $booking->amount }}</div>
+                                <div class="col text-right">${{ $booking->amount }}</div>
                             </div>
                             <div class="row lower">
                                 <div class="col text-left"><b>Total to pay</b></div>
-                                <div class="col text-right"><b>{{ $booking->amount }}</b></div>
+                                <div class="col text-right"><b>${{ $booking->amount }}</b></div>
                             </div>
 
 
