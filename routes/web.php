@@ -32,6 +32,7 @@ Route::get('/', [HomeController::class, 'index'])->name('homepage');
 Route::post('/search', [HomeController::class, 'hallSearch'])->name('hallSearch');
 Route::post('/book', [HomeController::class, 'store'])->name('book_now');
 Route::get('/halldetails/{id}', [HomeController::class, 'halldetails'])->name('halldetails');
+Route::get('/status_update', [HomeController::class, 'status_update'])->name('status_update');
 
 
 
