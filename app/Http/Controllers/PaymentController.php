@@ -107,6 +107,8 @@ class PaymentController extends Controller
         ->where('status', 'pending')
         ->latest()
         ->first();
+
+
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $paypalToken = $provider->getAccessToken();

@@ -148,7 +148,7 @@
         #cvv:hover {}
     </style>
 
-<div style="background-image: url('{{ asset('ui/searchpage') }}/img/background.jpg'); object-fit: cover;">
+<div style="background-image: url('{{ asset('ui/searchpage') }}/img/background.jpg'); background-size: cover;">
 
     <div class="container p-md-5" style="padding-left: 20% !important; padding-right: 20% !important">
         <div class="card">

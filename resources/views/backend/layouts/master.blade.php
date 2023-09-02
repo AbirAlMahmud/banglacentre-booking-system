@@ -1377,7 +1377,7 @@
                 }
 
                 status_update();
-                setInterval(status_update, 60000);
+                setInterval(status_update, 30000);
             });
         </script>
 </body>
