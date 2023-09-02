@@ -22,7 +22,7 @@
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <p class="lead fw-normal mb-0" style="color: green;">{{ $hall->hall_name }}</p>
-                                <p class="small text-muted mb-0">Booking Date : {{ $bookingmanage->booking_date }}</p>
+                                <p class="small text-muted mb-0"><b>Booking Date : {{ $bookingmanage->booking_date }}</b></p>
                             </div>
                             <div class="card shadow-0 border mb-4">
                                 <div class="card-body">

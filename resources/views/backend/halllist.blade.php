@@ -81,8 +81,13 @@
 
                                                 </div>
                                                 <div class="d-flex flex-column mt-4">
-                                                    <button class="btn btn-success btn-sm" type="submit"
-                                                        style="width: 100px" value="{{ $hall->id }}" name="book_now">Book Now</button>
+                                                    @if(Auth::check())
+                                                        <button class="btn btn-success btn-sm" type="submit" style="width: 100px" value="{{ $hall->id }}" name="book_now">Book Now</button>
+                                                    @else
+                                                    <a href="{{ route('login') }}" class="btn btn-success btn-sm" style="width: 150px" type="submit" style="width: 100px" value="{{ $hall->id }}" name="book_now">Login for Book</a>
+                                                    <!-- You can also add a login link here if needed -->
+                                                    @endif
+
                                                     <a href="{{ route('halldetails', ['id' => $hall->id, 'price' => $price]) }}"
                                                         class="btn btn-success btn-sm mt-2" style="width: 100px">Details</a>
                                                 </div>

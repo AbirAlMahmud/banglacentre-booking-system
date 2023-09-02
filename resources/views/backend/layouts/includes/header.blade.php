@@ -63,7 +63,7 @@
                                         class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow"
                                         href="{{ route('login') }}"> <span
                                             class="elementor-button-content-wrapper"> <span
-                                                class="elementor-button-text">{{ Auth::user()->name ?? 'Login' }}</span> </span> </a> </div>
+                                                class="elementor-button-text">Welcome, {{ Auth::user()->name ?? 'Login' }}</span> </span> </a> </div>
                                                 <a class="dropdown-item d-flex align-items-center " style="margin-left: 5px" href="{{ asset('ui/backend') }}/#">
                                                     <i class="bi bi-box-arrow-right"></i>
                                                     <span>
