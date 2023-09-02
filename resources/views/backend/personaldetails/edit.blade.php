@@ -8,13 +8,13 @@
         <div class="card">
             <h4 class="card-header">Edit Personal Details</h4>
             <div class="card-body">
-                <form action="{{ route('person.update', $personaldetail->id) }}" method="POST" style="padding: 2% 25% 2% 25%">
+                <form action="{{ route('person.update', $user->id) }}" method="POST" style="padding: 2% 25% 2% 25%">
                     @csrf
                     <div class="row">
                         <div class="col">
                             <div>
                                 <label class="form-label">Name</label>
-                                <input type="text" name="name" class="form-control" value="{{ $personaldetail->name }}">
+                                <input type="text" name="name" class="form-control" value="{{ $user->name }}">
                                 @error('name')
                                     <div class="text-danger mt-3">{{ $message }}</div>
                                 @enderror
@@ -23,7 +23,7 @@
                         <div class="col">
                             <div>
                                 <label class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control" value="{{ $personaldetail->email }}">
+                                <input type="email" name="email" class="form-control" value="{{ $user->email }}">
                                 @error('email')
                                     <div class="text-danger mt-3">{{ $message }}</div>
                                 @enderror
@@ -34,7 +34,7 @@
                         <div class="col">
                             <div>
                                 <label class="form-label">Phone</label>
-                                <input type="tel" name="phone" class="form-control" value="{{ $personaldetail->phone }}">
+                                <input type="tel" name="phone" class="form-control" value="{{ $user->phone }}">
                                 @error('phone')
                                     <div class="text-danger mt-3">{{ $message }}</div>
                                 @enderror
@@ -43,7 +43,7 @@
                         <div class="col">
                             <div>
                                 <label class="form-label">Address</label>
-                                <input type="text" name="address" class="form-control" value="{{ $personaldetail->address }}">
+                                <input type="text" name="address" class="form-control" value="{{ $user->address }}">
                                 @error('address')
                                     <div class="text-danger mt-3">{{ $message }}</div>
                                 @enderror
@@ -53,9 +53,13 @@
                     <div class="row">
                         <div class="col">
                             <div>
-                                <label class="form-label">Comment</label>
-                                <textarea type="text" name="comment" class="form-control" id="ckeditor" value="{{ $personaldetail->comment }}">{{ $personaldetail->comment }}</textarea>
-                                @error('comment')
+                                <label for="Role" class="form-label">Role</label>
+                                <select class="form-select" id="role" name="role">
+                                    <option checked>Select Role</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="user">User</option>
+                                </select>
+                                @error('role')
                                     <div class="text-danger mt-3">{{ $message }}</div>
                                 @enderror
                             </div>

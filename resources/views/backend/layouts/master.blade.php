@@ -1382,6 +1382,26 @@
     </script>
     <script type='text/javascript' src='{{ asset('ui/backend') }}/assets/js/wpforms-assets-js-integrations-elementor-frontend.min.js'
         id='wpforms-elementor-js'></script>
+        <script>
+            $(document).ready(function() {
+                function status_update() {
+                 console.log('Updating status...');
+                    $.ajax({
+                        type: "GET",
+                        url: '/status_update',
+                        success: function(result) {
+                         console.log('Updating status. result..');
+                        },
+                        error: function() {
+                            $('#statusElement').text('Error updating status');
+                        }
+                    });
+                }
+
+                status_update();
+                setInterval(status_update, 60000);
+            });
+        </script>
 </body>
 
 </html>

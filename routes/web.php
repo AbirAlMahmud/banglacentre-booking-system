@@ -31,9 +31,8 @@ use App\Http\Controllers\ShiftController;
 Route::get('/', [HomeController::class, 'index'])->name('homepage');
 Route::post('/search', [HomeController::class, 'hallSearch'])->name('hallSearch');
 Route::post('/book', [HomeController::class, 'store'])->name('book_now');
-Route::get('/halldetails/{id}', [HomeController::class, 'halldetails'])->name('halldetails');
+Route::get('/halldetails/{id}/{price}', [HomeController::class, 'halldetails'])->name('halldetails');
 Route::get('/status_update', [HomeController::class, 'status_update'])->name('status_update');
-
 
 
 Route::get('/dashboard', function () {
@@ -93,8 +92,6 @@ Route::middleware(['auth','checkpermission'])->group(function () {
 
     Route::prefix('person-details')->group(function () {
         Route::get('/index', [PersonalDetailsController::class, 'index'])->name('person.index');
-        Route::get('/create', [PersonalDetailsController::class, 'create'])->name('person.create');
-        Route::post('/store', [PersonalDetailsController::class, 'store'])->name('person.store');
         Route::get('/edit/{id}', [PersonalDetailsController::class, 'edit'])->name('person.edit');
         Route::post('/update/{id}', [PersonalDetailsController::class, 'update'])->name('person.update');
         Route::delete('/destroy/{id}', [PersonalDetailsController::class, 'destroy'])->name('person.destroy');
@@ -105,7 +102,7 @@ Route::middleware(['auth','checkpermission'])->group(function () {
 });
 
 Route::get('/searchresult', [HomeController::class, 'searchresult'])->name('searchresult.index');
-Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+Route::get('/payment/{hall_id}/{booking_id}', [PaymentController::class, 'index'])->name('payment.index');
 Route::post('/stripe', [PaymentController::class, 'processPayment'])->name('payment.stripe');
 
 

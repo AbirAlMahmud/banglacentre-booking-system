@@ -38,10 +38,10 @@
                                             <p class="text-muted mb-0 small">Capacity: <b>{{ $hall->capacity }}</b></p>
                                         </div>
                                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small">Price: <b>{{ $hall->price }}</b></p>
+                                            <p class="text-muted mb-0 small">Price: <b>${{ $hall->price }}</b></p>
                                         </div>
                                         <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
-                                            <p class="text-muted mb-0 small">Discount: <b>{{ $hall->charity_discount }}</b></p>
+                                            <p class="text-muted mb-0 small">Discount: <b>${{ $hall->charity_discount }}</b></p>
                                         </div>
                                     </div>
                                 </div>

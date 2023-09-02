@@ -25,11 +25,15 @@ session_start();
 
 class PaymentController extends Controller
 {
-    public function index(Request $request)
+    public function index($hall_id, $booking_id)
     {
-        $booking_id = $request->query('booking');
+
+
+        $hall = HallManage::find($hall_id);
+
         $booking = BookingManage::find($booking_id);
-        return view('backend.payment', compact('booking'));
+
+        return view('backend.payment', compact('hall','booking'));
     }
 
 
@@ -165,7 +169,7 @@ class PaymentController extends Controller
                 $payment->status = 'Paid';
                 $payment->save();
 
-                UpdateBookedStatus::dispatch($bookingmanage)->delay(now()->addSeconds(60));
+
 
             } else {
                 return 'fail insert in payment table';

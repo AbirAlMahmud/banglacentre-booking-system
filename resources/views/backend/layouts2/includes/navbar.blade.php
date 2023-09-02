@@ -43,7 +43,7 @@
 
         <div class="d-flex align-items-center justify-content-between">
             <a href="" class="logo d-flex align-items-center">
-                <img src="" alt="">
+                <img src="{{ asset('ui/backend') }}/assets/images/2023-08-logo-footer-2-1.png" alt="No Image">
                 <span class="d-none d-lg-block">Bangla Centre</span>
             </a>
 
