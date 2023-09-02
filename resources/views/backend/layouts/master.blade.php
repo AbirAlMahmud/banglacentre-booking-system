@@ -127,6 +127,28 @@
             }))
         }((window, document), window._wpemojiSettings);
     </script>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script>
+       $(document).ready(function() {
+           function status_update() {
+            console.log('Updating status...');
+               $.ajax({
+                   type: "GET",
+                   url: '/status_update',
+                   success: function(result) {
+                    console.log('Updating status. result..');                       
+                   },
+                   error: function() {
+                       $('#statusElement').text('Error updating status');
+                   }
+               });
+           }
+   
+           status_update();
+           setInterval(status_update, 50000);
+       });
+   </script>
+   
     <style type="text/css">
         img.wp-smiley,
         img.emoji {

@@ -18,14 +18,16 @@
 
     <section style="background-color: #eee;">
         <div class="container py-5">
-            <form action="{{ route('book_now') }}" method="post">
-                @csrf
-                @method('POST')
-                <input type="hidden" name="check_out_date" value="{{ $check_out_date_view }}">
-                <input type="hidden" name="check_in_date" value="{{ $check_in_date_view }}">
-                <input type="hidden" name="shifts_model_id" value="{{ $shift_view }}">
+
                 @if (isset($allHallInfo))
+              
                     @foreach ($allHallInfo as $hall)
+                    <form action="{{ route('book_now') }}" method="post">
+                        @csrf
+                        @method('POST')
+                        <input type="hidden" name="check_out_date" value="{{ $check_out_date_view }}">
+                        <input type="hidden" name="check_in_date" value="{{ $check_in_date_view }}">
+                        <input type="hidden" name="shifts_model_id" value="{{ $shift_view }}">
                         <div class="row justify-content-center mb-3">
                             <div class="col-md-12 col-xl-10">
                                 <div class="card shadow-0 border rounded-3">
@@ -58,7 +60,7 @@
                                             <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
                                                 <div class="d-flex flex-row align-items-center mb-1">
                                                     @if ($charity == 1 && isset($discount_prices[$hall->id]))
-                                                        <input type="text" name="calculated_price"
+                                                        <input type="hidden" name="calculated_price"
                                                             value="{{ $discount_prices[$hall->id] * $numberOfDays }}">
 
                                                         <h4 class="mb-1 me-1">
@@ -67,7 +69,7 @@
                                                             $price = $discount_prices[$hall->id] * $numberOfDays;
                                                         @endphp
                                                     @else
-                                                        <input type="text" name="calculated_price"
+                                                        <input type="hidden" name="calculated_price"
                                                             value="{{ $hall->price * $numberOfDays }}">
 
                                                         <h4 class="mb-1 me-1">${{ $hall->price * $numberOfDays }}</h4>
@@ -90,8 +92,16 @@
                                 </div>
                             </div>
                         </div>
+                    </form>
                     @endforeach
+
                 @else
+                <form action="{{ route('book_now') }}" method="post">
+                    @csrf
+                    @method('POST')
+                    <input type="hidden" name="check_out_date" value="{{ $check_out_date_view }}">
+                    <input type="hidden" name="check_in_date" value="{{ $check_in_date_view }}">
+                    <input type="hidden" name="shifts_model_id" value="{{ $shift_view }}">
 
                     <div class="row justify-content-center mb-3">
                         <div class="col-md-12 col-xl-10">
