@@ -33,6 +33,7 @@ Route::post('/search', [HomeController::class, 'hallSearch'])->name('hallSearch'
 Route::post('/book', [HomeController::class, 'store'])->name('book_now');
 Route::get('/halldetails/{id}/{price}', [HomeController::class, 'halldetails'])->name('halldetails');
 Route::get('/status_update', [HomeController::class, 'status_update'])->name('status_update');
+Route::get('/status_update_pending', [HomeController::class, 'status_update_pending'])->name('status_update_pending');
 
 
 Route::get('/dashboard', function () {
