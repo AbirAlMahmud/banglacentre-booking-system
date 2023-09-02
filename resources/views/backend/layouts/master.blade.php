@@ -136,14 +136,14 @@
                    type: "GET",
                    url: '/status_update',
                    success: function(result) {
-                    console.log('Updating status. result..');                       
+                    console.log('Updating status. result..');
                    },
                    error: function() {
                        $('#statusElement').text('Error updating status');
                    }
                });
            }
-              setInterval(status_update, 50000);
+              setInterval(status_update, 60000);
        });
    </script>
    <script>
@@ -154,7 +154,7 @@
                    type: "GET",
                    url: '/status_update_pending',
                    success: function(result) {
-                    console.log('Updating status pending. result..');                       
+                    console.log('Updating status pending. result..');
                    },
                    error: function() {
                        $('#statusElement').text('Error updating status');
@@ -164,7 +164,7 @@
               setInterval(status_update_pending, 600000);
        });
    </script>
-   
+
     <style type="text/css">
         img.wp-smiley,
         img.emoji {
@@ -1398,7 +1398,7 @@
     </script>
     <script type='text/javascript' src='{{ asset('ui/backend') }}/assets/js/wpforms-assets-js-integrations-elementor-frontend.min.js'
         id='wpforms-elementor-js'></script>
-      
+
 </body>
 
 </html>

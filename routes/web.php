@@ -1,20 +1,21 @@
 <?php
 
 
-use App\Http\Controllers\BookingManageController;
-
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HallManageController;
 use App\Http\Controllers\SearchPageController;
 use App\Http\Controllers\SearchResultController;
-use App\Http\Controllers\PersonalDetailsController;
-use App\Http\Controllers\HallManageController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BookingManageController;
 use App\Http\Controllers\PaymentManageController;
-use App\Http\Controllers\ShiftController;
+use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\PersonalDetailsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,9 +37,8 @@ Route::get('/status_update', [HomeController::class, 'status_update'])->name('st
 Route::get('/status_update_pending', [HomeController::class, 'status_update_pending'])->name('status_update_pending');
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard', [UserDashboardController::class, 'user_dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -46,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth','checkpermission'])->group(function () {
+Route::middleware(['auth', 'checkpermission'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('admin.index');
         Route::get('/edit/{id}', [DashboardController::class, 'edit'])->name('dashboard.edit');

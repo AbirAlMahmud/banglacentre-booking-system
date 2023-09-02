@@ -20,7 +20,7 @@
         <div class="container py-5">
 
                 @if (isset($allHallInfo))
-              
+
                     @foreach ($allHallInfo as $hall)
                     <form action="{{ route('book_now') }}" method="post">
                         @csrf
@@ -164,7 +164,7 @@
                                                         style="width: 130px">Login to Book</a>
                                                 @endif
 
-                                                <a href="{{ route('halldetails', [ encrypt($hallInfo->id), 'price' => $price]) }}"
+                                                <a href="{{ route('halldetails', [ 'id' => $hallInfo->id, 'price' => $price]) }}"
                                                     class="btn btn-success btn-sm mt-2" style="width: 100px">Details</a>
                                             </div>
                                         </div>

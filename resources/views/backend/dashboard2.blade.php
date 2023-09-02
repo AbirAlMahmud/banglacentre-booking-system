@@ -14,7 +14,7 @@
         </nav>
     </div><!-- End Page Title -->
 
-{{--
+
        <section class="section dashboard">
         <div class="row">
 
@@ -22,110 +22,16 @@
             <div class="col-lg-8">
                 <div class="row">
 
-                    <!-- Sales Card -->
+                    <!-- Customer Card -->
                     <div class="col-xxl-4 col-md-6">
                         <div class="card info-card sales-card">
 
-                            <div class="filter">
-                                <a class="icon" href="{{ asset('ui/backend') }}/#" data-bs-toggle="dropdown"><i
-                                        class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
 
-                                    <li><a class="dropdown-item" href="{{ asset('ui/backend') }}/#">Today</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="{{ asset('ui/backend') }}/#">This
-                                            Month</a></li>
-                                    <li><a class="dropdown-item" href="{{ asset('ui/backend') }}/#">This Year</a>
-                                    </li>
-                                </ul>
-                            </div>
 
-                            <a href="{{ route('category.index') }}">
+                            <a href="{{ route('person.index') }}">
                             <div class="card-body">
-                                <h5 class="card-title">Category</h5>
+                                <h5 class="card-title">Customer</h5>
 
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-cart"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>{{ $totalCategories }}</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            </a>
-
-                        </div>
-                    </div><!-- End Sales Card -->
-
-                    <!-- Revenue Card -->
-                    <div class="col-xxl-4 col-md-6">
-                        <div class="card info-card revenue-card">
-
-                            <div class="filter">
-                                <a class="icon" href="{{ asset('ui/backend') }}/#" data-bs-toggle="dropdown"><i
-                                        class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
-
-                                    <li><a class="dropdown-item" href="{{ asset('ui/backend') }}/#">Today</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="{{ asset('ui/backend') }}/#">This
-                                            Month</a></li>
-                                    <li><a class="dropdown-item" href="{{ asset('ui/backend') }}/#">This Year</a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <a href="{{ route('product.index') }}">
-                                <div class="card-body">
-                                    <h5 class="card-title">Product</h5>
-
-                                    <div class="d-flex align-items-center">
-                                        <div
-                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-currency-dollar"></i>
-                                        </div>
-                                        <div class="ps-3">
-                                            <h6>{{ $totalProducts }}</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                        </div>
-                    </div><!-- End Revenue Card -->
-
-                    <!-- Customers Card -->
-                    <div class="col-xxl-4 col-xl-12">
-
-                        <div class="card info-card customers-card">
-
-                            <div class="filter">
-                                <a class="icon" href="{{ asset('ui/backend') }}/#" data-bs-toggle="dropdown"><i
-                                        class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
-
-                                    <li><a class="dropdown-item" href="{{ asset('ui/backend') }}/#">Today</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="{{ asset('ui/backend') }}/#">This
-                                            Month</a></li>
-                                    <li><a class="dropdown-item" href="{{ asset('ui/backend') }}/#">This Year</a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <a href="{{ route('user.index') }}">
-                            <div class="card-body">
-                                <h5 class="card-title">Users</h5>
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-people"></i>
@@ -136,187 +42,106 @@
                                 </div>
                             </div>
                             </a>
+
                         </div>
+                    </div><!-- End User Card -->
 
-                    </div><!-- End Customers Card -->
+                    <!-- Shift Card -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card revenue-card">
 
-                    <!-- Reports -->
-                    <div class="col-12">
-                        <div class="card">
 
-                            <div class="filter">
-                                <a class="icon" href="{{ asset('ui/backend') }}/#" data-bs-toggle="dropdown"><i
-                                        class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
+                            <a href="{{ route('shift.index') }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">Shift</h5>
 
-                                    <li><a class="dropdown-item" href="{{ asset('ui/backend') }}/#">Today</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="{{ asset('ui/backend') }}/#">This
-                                            Month</a></li>
-                                    <li><a class="dropdown-item" href="{{ asset('ui/backend') }}/#">This Year</a>
-                                    </li>
-                                </ul>
-                            </div>
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-clock"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>{{ $totalShifts }}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
 
+                        </div>
+                    </div><!-- End Shift Card -->
+
+                    <!-- Hall Card -->
+                    <div class="col-xxl-4 col-xl-12">
+
+                        <div class="card info-card customers-card">
+
+
+
+                            <a href="{{ route('hall_manage.index') }}">
                             <div class="card-body">
-                                <h5 class="card-title">Reports <span>/Today</span></h5>
-
-                                <!-- Line Chart -->
-                                <div id="reportsChart"></div>
-
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", () => {
-                                        new ApexCharts(document.querySelector("#reportsChart"), {
-                                            series: [{
-                                                name: 'Sales',
-                                                data: [31, 40, 28, 51, 42, 82, 56],
-                                            }, {
-                                                name: 'Revenue',
-                                                data: [11, 32, 45, 32, 34, 52, 41]
-                                            }, {
-                                                name: 'Customers',
-                                                data: [15, 11, 32, 18, 9, 24, 11]
-                                            }],
-                                            chart: {
-                                                height: 350,
-                                                type: 'area',
-                                                toolbar: {
-                                                    show: false
-                                                },
-                                            },
-                                            markers: {
-                                                size: 4
-                                            },
-                                            colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                                            fill: {
-                                                type: "gradient",
-                                                gradient: {
-                                                    shadeIntensity: 1,
-                                                    opacityFrom: 0.3,
-                                                    opacityTo: 0.4,
-                                                    stops: [0, 90, 100]
-                                                }
-                                            },
-                                            dataLabels: {
-                                                enabled: false
-                                            },
-                                            stroke: {
-                                                curve: 'smooth',
-                                                width: 2
-                                            },
-                                            xaxis: {
-                                                type: 'datetime',
-                                                categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z",
-                                                    "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z",
-                                                    "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z",
-                                                    "2018-09-19T06:30:00.000Z"
-                                                ]
-                                            },
-                                            tooltip: {
-                                                x: {
-                                                    format: 'dd/MM/yy HH:mm'
-                                                },
-                                            }
-                                        }).render();
-                                    });
-                                </script>
-                                <!-- End Line Chart -->
-
+                                <h5 class="card-title">Halls</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-house"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{ $totalHalls }}</h6>
+                                    </div>
+                                </div>
                             </div>
-
+                            </a>
                         </div>
-                    </div><!-- End Reports -->
 
-                    <!-- Recent Sales -->
-                    <div class="col-12">
-                        <div class="card recent-sales overflow-auto">
+                    </div><!-- End Hall Card -->
 
-                            <div class="filter">
-                                <a class="icon" href="{{ asset('ui/backend') }}/#" data-bs-toggle="dropdown"><i
-                                        class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
+                    <!-- Booking Card -->
+                    <div class="col-xxl-4 col-xl-12">
 
-                                    <li><a class="dropdown-item" href="{{ asset('ui/backend') }}/#">Today</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="{{ asset('ui/backend') }}/#">This
-                                            Month</a></li>
-                                    <li><a class="dropdown-item" href="{{ asset('ui/backend') }}/#">This Year</a>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div class="card info-card customers-card">
 
+
+
+                            <a href="{{ route('booking.index') }}">
                             <div class="card-body">
-                                <h5 class="card-title">Recent Sales <span>| Today</span></h5>
-
-                                <table class="table table-borderless datatable">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Customer</th>
-                                            <th scope="col">Product</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row"><a href="{{ asset('ui/backend') }}/#">#2457</a>
-                                            </th>
-                                            <td>Brandon Jacob</td>
-                                            <td><a href="{{ asset('ui/backend') }}/#" class="text-primary">At
-                                                    praesentium minu</a></td>
-                                            <td>$64</td>
-                                            <td><span class="badge bg-success">Approved</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"><a href="{{ asset('ui/backend') }}/#">#2147</a>
-                                            </th>
-                                            <td>Bridie Kessler</td>
-                                            <td><a href="{{ asset('ui/backend') }}/#" class="text-primary">Blanditiis
-                                                    dolor omnis similique</a></td>
-                                            <td>$47</td>
-                                            <td><span class="badge bg-warning">Pending</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"><a href="{{ asset('ui/backend') }}/#">#2049</a>
-                                            </th>
-                                            <td>Ashleigh Langosh</td>
-                                            <td><a href="{{ asset('ui/backend') }}/#" class="text-primary">At
-                                                    recusandae consectetur</a></td>
-                                            <td>$147</td>
-                                            <td><span class="badge bg-success">Approved</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"><a href="{{ asset('ui/backend') }}/#">#2644</a>
-                                            </th>
-                                            <td>Angus Grady</td>
-                                            <td><a href="{{ asset('ui/backend') }}/#" class="text-primar">Ut
-                                                    voluptatem id earum et</a></td>
-                                            <td>$67</td>
-                                            <td><span class="badge bg-danger">Rejected</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"><a href="{{ asset('ui/backend') }}/#">#2644</a>
-                                            </th>
-                                            <td>Raheem Lehner</td>
-                                            <td><a href="{{ asset('ui/backend') }}/#" class="text-primary">Sunt
-                                                    similique distinctio</a></td>
-                                            <td>$165</td>
-                                            <td><span class="badge bg-success">Approved</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
+                                <h5 class="card-title">Bookings</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-calendar"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{ $totalBookings }}</h6>
+                                    </div>
+                                </div>
                             </div>
-
+                            </a>
                         </div>
-                    </div><!-- End Recent Sales -->
+
+                    </div><!-- End Hall Card -->
+                    <!-- Booking Card -->
+                    <div class="col-xxl-4 col-xl-12">
+
+                        <div class="card info-card customers-card">
+
+
+
+                            <a href="{{ route('payment_dashboard.index') }}">
+                            <div class="card-body">
+                                <h5 class="card-title">Payments</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-currency-dollar"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{ $totalPayments }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+
+                    </div><!-- End Hall Card -->
+
+
 
 
 
@@ -328,11 +153,10 @@
 
 
 
-
             </div><!-- End Right side columns -->
 
         </div>
-    </section> --}}
+    </section>
 
 
 

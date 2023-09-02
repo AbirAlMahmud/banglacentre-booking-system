@@ -47,7 +47,6 @@ class PaymentController extends Controller
 
 
         $bookingmanage = BookingManage::where('user_id', $user_id)
-        ->where('status', 'pending')
         ->latest()
         ->first();
 
@@ -82,7 +81,7 @@ class PaymentController extends Controller
 
 
         $bookingmanage = BookingManage::where('user_id', $user_id)
-        ->where('status', 'pending')
+
         ->latest()
         ->first();
 
@@ -104,7 +103,6 @@ class PaymentController extends Controller
         $user_id = Auth::id();
 
         $bookingmanage = BookingManage::where('user_id', $user_id)
-        ->where('status', 'pending')
         ->latest()
         ->first();
 
@@ -159,7 +157,6 @@ class PaymentController extends Controller
             $user_id = Auth::id();
 
             $bookingmanage = BookingManage::where('user_id', $user_id)
-            ->where('status', 'pending')
             ->latest()
             ->first();
             if ($bookingmanage) {
@@ -183,7 +180,6 @@ class PaymentController extends Controller
 
 
             $bookingmanage = BookingManage::where('user_id', $user_id)
-            ->where('status', 'pending')
             ->latest()
             ->first();
             $hall=HallManage::findorfail($bookingmanage->hall_manage_id);

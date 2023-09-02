@@ -57,13 +57,35 @@
                     <div class="elementor-widget-wrap elementor-element-populated">
                         <div class="elementor-element elementor-element-13c3493 elementor-align-right elementor-widget__width-initial elementor-widget elementor-widget-button"
                             data-id="13c3493" data-element_type="widget" data-widget_type="button.default">
-                            <div class="elementor-widget-container">
+                            @if(Auth::check())
+                            <div class="elementor-widget-container d-flex ml-4">
                                 <div class="elementor-button-wrapper"> <a
                                         class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow"
                                         href="{{ route('login') }}"> <span
                                             class="elementor-button-content-wrapper"> <span
                                                 class="elementor-button-text">{{ Auth::user()->name ?? 'Login' }}</span> </span> </a> </div>
+                                                <a class="dropdown-item d-flex align-items-center " style="margin-left: 5px" href="{{ asset('ui/backend') }}/#">
+                                                    <i class="bi bi-box-arrow-right"></i>
+                                                    <span>
+                                                        <form action="{{ route('logout') }}" method="POST">
+                                                            @csrf
+                                                            <button class="btn btn-sm btn-primary">Logout</button>
+                                                        </form>
+                                                    </span>
+                                                </a>
+
                             </div>
+@else
+    <div class="elementor-button-wrapper">
+        <a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-grow" href="{{ route('login') }}">
+            <span class="elementor-button-content-wrapper">
+                <span class="elementor-button-text">Login</span>
+            </span>
+        </a>
+    </div>
+@endif
+
+
                         </div>
                     </div>
                 </div>

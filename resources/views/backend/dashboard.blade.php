@@ -155,24 +155,5 @@
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
 
-<script>
-    $(document).ready(function() {
-        function status_update() {
-         console.log('Updating status...');
-            $.ajax({
-                type: "GET",
-                url: '/status_update',
-                success: function(result) {
-                 console.log('Updating status. result..');                       
-                },
-                error: function() {
-                    $('#statusElement').text('Error updating status');
-                }
-            });
-        }
 
-        status_update();
-        setInterval(status_update, 30000);
-    });
-</script>
 @endsection
