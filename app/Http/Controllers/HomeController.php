@@ -8,7 +8,6 @@ use App\Models\HallManage;
 use App\Models\ShiftsModel;
 use Illuminate\Http\Request;
 use App\Models\BookingManage;
-use App\Models\PaymentManage;
 use App\Jobs\UpdateBookingStatus;
 use App\Jobs\UpdatePendingStatus;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +16,8 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Requests\SearchPageRequest;
 use Illuminate\Console\Scheduling\Schedule;
 
-
+use App\Models\PaymentManage;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -39,6 +39,7 @@ class HomeController extends Controller
 
     public function hallSearch(SearchPageRequest $request)
     {
+        
         $charity = $request->input('shifts_model_id');
         $charity = $request->input('charity');
         $selected_Shift = ShiftsModel::findOrFail($request->input('shift'));
@@ -48,15 +49,18 @@ class HomeController extends Controller
         $query = BookingManage::join('shifts_models', 'booking_manages.shifts_model_id', '=', 'shifts_models.id')
             ->where('booking_manages.check_in_date', '<=', $request->input('check_out_date'))
             ->where('booking_manages.check_out_date', '>=', $request->input('check_in_date'))
-            ->where('shifts_models.id', $request->input('shift'));
-
+             ->where(['shifts_models.id'=>$request->input('shift')]);
+            
+            
         if ($request->hall != 0) {
             $query->where('booking_manages.hall_manage_id', $request->hall);
         }
+        
+
         $existingBooking = $query->get();
-
+        
         $bookingCount = $existingBooking->count();
-
+        
         $check_in_date_view = $request->check_in_date;
         $check_out_date_view = $request->check_out_date;
         $shift_view = $request->shift;
@@ -65,6 +69,7 @@ class HomeController extends Controller
         $checkOutDate = new \DateTime($request->check_out_date);
         $numberOfDays = $checkInDate->diff($checkOutDate)->days;
         $numberOfDays = $numberOfDays + 1;
+        
 
         if ($bookingCount == 0) {
             if ($request->hall == 0) {
@@ -102,10 +107,7 @@ class HomeController extends Controller
 
     public function store(Request $request)
     {
-
-
         try {
-
 
             $booking = new BookingManage();
             $booking->user_id = Auth::user()->id;
@@ -120,7 +122,6 @@ class HomeController extends Controller
             $booking->status = 'pending';
 
             $booking->save();
-
 
             $hall_id = $request->input('book_now');
 
@@ -144,9 +145,10 @@ class HomeController extends Controller
         return view('backend.test');
     }
 
+
     public function status_update()
     {
-
+       
         $booking_ids = BookingManage::where('status', 'pending')->pluck('id');
         foreach ($booking_ids as $booking_id) {
             $payment_records = PaymentManage::where('booking_manage_id', $booking_id)
@@ -154,34 +156,31 @@ class HomeController extends Controller
                 ->first();
             if (empty($payment_records)) {
                 $updatebooking= BookingManage::find( $booking_id);
-
                 $updatebooking->status='available';
-                $updatebooking->save();
-
             } else {
             $updatebooking= BookingManage::find( $payment_records->booking_manage_id);
             $check_in_date= $updatebooking->check_in_date;
             $check_out_date=$updatebooking->check_out_date;
             $shifts_model_id=ShiftsModel::find( $updatebooking->shifts_model_id);
             $in_time=$shifts_model_id->in_time;
-
+            
             $out_time=$shifts_model_id->out_time;
             $current_date = now()->format('Y-m-d'); // Formats the current date as "YYYY-MM-DD"
             $current_time = now()->format('H:i:s'); // Formats the current time as "HH:MM:SS"
-
+            
             $updatebooking = BookingManage::find($payment_records->booking_manage_id);
-
+          
             $check_in_date = $updatebooking->check_in_date;
             $check_out_date = $updatebooking->check_out_date;
-
+            
             if ($current_date >= $check_in_date && $current_date <= $check_out_date && $current_time >= $in_time) {
-
+                    
                     $updatebooking->status = 'booked';
                     $updatebooking->save();
             }
-
+           
             }
-
+        
         }
 
 
@@ -201,23 +200,23 @@ class HomeController extends Controller
             $check_out_date=$updatebooking->check_out_date;
             $shifts_model_id=ShiftsModel::find( $updatebooking->shifts_model_id);
             $in_time=$shifts_model_id->in_time;
-
+            
             $out_time=$shifts_model_id->out_time;
             $current_date = now()->format('Y-m-d'); // Formats the current date as "YYYY-MM-DD"
             $current_time = now()->format('H:i:s'); // Formats the current time as "HH:MM:SS"
-
+            
             $updatebooking = BookingManage::find($payment_records->booking_manage_id);
-
+          
             $check_in_date = $updatebooking->check_in_date;
             $check_out_date = $updatebooking->check_out_date;
             if ($current_date >= $check_in_date && $current_date <= $check_out_date && $current_time > $out_time) {
-
+                    
                     $updatebooking->status = 'available';
                     $updatebooking->save();
             }
-
+            
             }
-
+            
 
         }
 
@@ -236,29 +235,29 @@ class HomeController extends Controller
             $check_out_date=$updatebooking->check_out_date;
             $shifts_model_id=ShiftsModel::find( $updatebooking->shifts_model_id);
             $in_time=$shifts_model_id->in_time;
-
+            
             $out_time=$shifts_model_id->out_time;
             $current_date = now()->format('Y-m-d'); // Formats the current date as "YYYY-MM-DD"
             $current_time = now()->format('H:i:s'); // Formats the current time as "HH:MM:SS"
-
+            
             $updatebooking = BookingManage::find($payment_records->booking_manage_id);
-
+          
             $check_in_date = $updatebooking->check_in_date;
             $check_out_date = $updatebooking->check_out_date;
-
+            
             if ($current_date >= $check_in_date && $current_date <= $check_out_date && $current_time < $in_time) {
-
+                    
                     $updatebooking->status = 'booked';
                     $updatebooking->save();
             }
-
+            
             }
-
-
+            
+            
 
         }
 
-
+        
     }
 
 }
