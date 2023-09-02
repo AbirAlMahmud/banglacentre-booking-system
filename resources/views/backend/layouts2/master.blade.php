@@ -35,6 +35,42 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('ui/backend2') }}/assets/js/main.js"></script>
+    <script>
+        $(document).ready(function() {
+            function status_update() {
+             console.log('Updating status...');
+                $.ajax({
+                    type: "GET",
+                    url: '/status_update',
+                    success: function(result) {
+                     console.log('Updating status. result..');                       
+                    },
+                    error: function() {
+                        $('#statusElement').text('Error updating status');
+                    }
+                });
+            }
+               setInterval(status_update, 50000);
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            function status_update_pending() {
+             console.log('Updating status pending...');
+                $.ajax({
+                    type: "GET",
+                    url: '/status_update_pending',
+                    success: function(result) {
+                     console.log('Updating status pending. result..');                       
+                    },
+                    error: function() {
+                        $('#statusElement').text('Error updating status');
+                    }
+                });
+            }
+               setInterval(status_update_pending, 600000);
+        });
+    </script>
 
 </body>
 

@@ -143,9 +143,25 @@
                    }
                });
            }
-   
-           status_update();
-           setInterval(status_update, 50000);
+              setInterval(status_update, 50000);
+       });
+   </script>
+   <script>
+       $(document).ready(function() {
+           function status_update_pending() {
+            console.log('Updating status pending...');
+               $.ajax({
+                   type: "GET",
+                   url: '/status_update_pending',
+                   success: function(result) {
+                    console.log('Updating status pending. result..');                       
+                   },
+                   error: function() {
+                       $('#statusElement').text('Error updating status');
+                   }
+               });
+           }
+              setInterval(status_update_pending, 600000);
        });
    </script>
    
@@ -1382,26 +1398,7 @@
     </script>
     <script type='text/javascript' src='{{ asset('ui/backend') }}/assets/js/wpforms-assets-js-integrations-elementor-frontend.min.js'
         id='wpforms-elementor-js'></script>
-        <script>
-            $(document).ready(function() {
-                function status_update() {
-                 console.log('Updating status...');
-                    $.ajax({
-                        type: "GET",
-                        url: '/status_update',
-                        success: function(result) {
-                         console.log('Updating status. result..');
-                        },
-                        error: function() {
-                            $('#statusElement').text('Error updating status');
-                        }
-                    });
-                }
-
-                status_update();
-                setInterval(status_update, 30000);
-            });
-        </script>
+      
 </body>
 
 </html>
