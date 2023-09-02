@@ -107,8 +107,6 @@ class HomeController extends Controller
 
     public function store(Request $request)
     {
-
-
         try {
 
             $booking = new BookingManage();

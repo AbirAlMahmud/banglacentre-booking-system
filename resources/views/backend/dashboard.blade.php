@@ -22,7 +22,6 @@
                     </div>
                     <div class="col-md-6 col-md-offset-1">
                         <div class="booking-form">
-
                             @if(session('message'))
                             <div class="alert alert-danger">
                                 {{ session('message') }}
