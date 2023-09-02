@@ -19,9 +19,8 @@
     <section style="background-color: #eee;">
         <div class="container py-5">
 
-                @if (isset($allHallInfo))
-
-                    @foreach ($allHallInfo as $hall)
+            @if (isset($allHallInfo))
+                @foreach ($allHallInfo as $hall)
                     <form action="{{ route('book_now') }}" method="post">
                         @csrf
                         @method('POST')
@@ -58,13 +57,13 @@
                                                 </p>
                                             </div>
                                             <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
-                                                <div class="d-flex flex-row align-items-center mb-1">
+                                                <div class="d-flex flex-row align-items-center mb-1 justify-content-center">
                                                     @if ($charity == 1 && isset($discount_prices[$hall->id]))
                                                         <input type="hidden" name="calculated_price"
                                                             value="{{ $discount_prices[$hall->id] * $numberOfDays }}">
 
-                                                        <h4 class="mb-1 me-1">
-                                                            ${{ $discount_prices[$hall->id] * $numberOfDays }}</h4>
+                                                        <h2 class="mb-1 me-1">
+                                                            ${{ $discount_prices[$hall->id] * $numberOfDays }}</h2>
                                                         @php
                                                             $price = $discount_prices[$hall->id] * $numberOfDays;
                                                         @endphp
@@ -72,24 +71,27 @@
                                                         <input type="hidden" name="calculated_price"
                                                             value="{{ $hall->price * $numberOfDays }}">
 
-                                                        <h4 class="mb-1 me-1">${{ $hall->price * $numberOfDays }}</h4>
+                                                        <h2 class="mb-1 me-1">${{ $hall->price * $numberOfDays }}</h2>
                                                         @php
-                                                            $price = $hall->price * $numberOfDays
+                                                            $price = $hall->price * $numberOfDays;
                                                         @endphp
                                                     @endif
                                                     <input type="hidden" name="charity" value="{{ $charity }}">
 
                                                 </div>
                                                 <div class="d-flex flex-column mt-4">
-                                                    @if(Auth::check())
-                                                        <button class="btn btn-success btn-sm" type="submit" style="width: 100px" value="{{ $hall->id }}" name="book_now">Book Now</button>
+                                                    @if (Auth::check())
+                                                        <button class="btn btn-success btn-sm" type="submit"
+                                                            value="{{ $hall->id }}" name="book_now">Book Now</button>
                                                     @else
-                                                    <a href="{{ route('login') }}" class="btn btn-success btn-sm" style="width: 150px" type="submit" style="width: 100px" value="{{ $hall->id }}" name="book_now">Login for Book</a>
-                                                    <!-- You can also add a login link here if needed -->
+                                                        <a href="{{ route('login') }}" class="btn btn-success btn-sm"
+                                                              type="submit" value="{{ $hall->id }}"
+                                                            name="book_now">Login for Book</a>
+                                                        <!-- You can also add a login link here if needed -->
                                                     @endif
 
                                                     <a href="{{ route('halldetails', ['id' => $hall->id, 'price' => $price]) }}"
-                                                        class="btn btn-success btn-sm mt-2" style="width: 100px">Details</a>
+                                                        class="btn btn-success btn-sm mt-2">Details</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -98,9 +100,8 @@
                             </div>
                         </div>
                     </form>
-                    @endforeach
-
-                @else
+                @endforeach
+            @else
                 <form action="{{ route('book_now') }}" method="post">
                     @csrf
                     @method('POST')
@@ -139,19 +140,19 @@
                                             </p>
                                         </div>
                                         <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
-                                            <div class="d-flex flex-row align-items-center mb-1">
+                                            <div class="d-flex flex-row align-items-center mb-1 justify-content-center">
 
                                                 @if (isset($discount_price))
-                                                <input type="hidden" name="calculated_price"
-                                                            value="{{ $discount_price * $numberOfDays }}">
-                                                    <h4 class="mb-1 me-1">${{ $discount_price * $numberOfDays }}</h4>
+                                                    <input type="hidden" name="calculated_price"
+                                                        value="{{ $discount_price * $numberOfDays }}">
+                                                    <h2 class="mb-1 me-1">${{ $discount_price * $numberOfDays }}</h2>
                                                     @php
                                                         $price = $discount_price * $numberOfDays;
                                                     @endphp
                                                 @else
-                                                <input type="hidden" name="calculated_price"
-                                                value="{{ $hallInfo->price * $numberOfDays }}">
-                                                    <h4 class="mb-1 me-1">${{ $hallInfo->price * $numberOfDays }}</h4>
+                                                    <input type="hidden" name="calculated_price"
+                                                        value="{{ $hallInfo->price * $numberOfDays }}">
+                                                    <h2 class="mb-1 me-1">${{ $hallInfo->price * $numberOfDays }}</h2>
                                                     @php
                                                         $price = $hallInfo->price * $numberOfDays;
                                                     @endphp
@@ -163,14 +164,14 @@
                                                 @if (auth()->check())
                                                     <!-- Check if the user is authenticated -->
                                                     <button class="btn btn-success btn-sm" type="submit"
-                                                        style="width: 100px"  value="{{ $hallInfo->id }}" name="book_now">Book Now</button>
+                                                        value="{{ $hallInfo->id }}" name="book_now">Book Now</button>
                                                 @else
                                                     <a href="{{ route('login') }}" class="btn btn-primary btn-sm"
-                                                        style="width: 130px">Login to Book</a>
+                                                        >Login to Book</a>
                                                 @endif
 
-                                                <a href="{{ route('halldetails', [ 'id' => $hallInfo->id, 'price' => $price]) }}"
-                                                    class="btn btn-success btn-sm mt-2" style="width: 100px">Details</a>
+                                                <a href="{{ route('halldetails', ['id' => $hallInfo->id, 'price' => $price]) }}"
+                                                    class="btn btn-success btn-sm mt-2">Details</a>
                                             </div>
                                         </div>
                                     </div>
@@ -178,7 +179,7 @@
                             </div>
                         </div>
                     </div>
-                @endif
+            @endif
             </form>
         </div>
     </section>

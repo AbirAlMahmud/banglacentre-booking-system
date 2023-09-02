@@ -39,6 +39,10 @@ Route::get('/status_update_pending', [HomeController::class, 'status_update_pend
 
 
 Route::get('/dashboard', [UserDashboardController::class, 'user_dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard/details/{id}', [UserDashboardController::class, 'user_details'])->middleware(['auth', 'verified'])->name('dashboard.details');
+Route::get('/booking_list', [UserDashboardController::class, 'booking_list'])->middleware(['auth', 'verified'])->name('booking_list');
+Route::get('/booking_details/{id}', [UserDashboardController::class, 'booking_details'])->middleware(['auth', 'verified'])->name('booking_details');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

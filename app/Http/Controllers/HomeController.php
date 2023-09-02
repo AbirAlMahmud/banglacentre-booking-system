@@ -39,6 +39,7 @@ class HomeController extends Controller
 
     public function hallSearch(SearchPageRequest $request)
     {
+
         $charity = $request->input('shifts_model_id');
         $charity = $request->input('charity');
         $selected_Shift = ShiftsModel::findOrFail($request->input('shift'));
@@ -46,11 +47,17 @@ class HomeController extends Controller
         $in_Time = new \DateTime($selected_Shift->in_time);
         $out_Time = new \DateTime($selected_Shift->out_time);
 
-        $query = BookingManage::
-        where('booking_manages.check_in_date', '<=', $request->input('check_out_date'))
+        $in_Time = new \DateTime($selected_Shift->in_time);
+        $out_Time = new \DateTime($selected_Shift->out_time);
+
+        if (strtotime($request->input('check_in_date')) > strtotime($request->input('check_out_date'))) {
+            return redirect()->back()->with('message', 'Invalid date selection. Check-in date cannot be greater than check-out date.');
+
+        }
+
+        $query = BookingManage::where('booking_manages.check_in_date', '<=', $request->input('check_out_date'))
         ->where('booking_manages.check_out_date', '>=', $request->input('check_in_date'))
-        ->where(['shifts_model_id' => $request->input('shift')])
-;
+        ->where(['shifts_model_id' => $request->input('shift')]);
 
         if ($request->hall != 0) {
             $query->where('booking_manages.hall_manage_id', $request->hall);
