@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-        <div style="background-image: url('{{ asset('ui/searchpage') }}/img/background.jpg'); object-fit: cover;">
+        <div style="background-image: url('{{ asset('ui/searchpage') }}/img/background.jpg'); background-size: cover;">
 
     <section class="h-100 gradient-custom">
         <div class="container py-5 h-100">

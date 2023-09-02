@@ -15,7 +15,18 @@ class PaymentManage extends Model
 
 
     public function bookingmanage()
-{
-    return $this->belongsTo(BookingManage::class);
-}
+    {
+        return $this->belongsTo(BookingManage::class);
+    }
+
+
+    public function hallmanages()
+    {
+        return $this->belongsTo(HallManage::class,'hall_manage_id','id');
+    }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
 }

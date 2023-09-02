@@ -52,7 +52,7 @@ class PaymentController extends Controller
         ->first();
 
         $charge = Charge::create([
-            'amount' => $bookingmanage->amount, // Amount in cents
+            'amount' => $bookingmanage->amount*100, // Amount in cents
             'currency' => 'USD',
             'source' => $request->stripeToken,
             'description' => 'Hall Charge',

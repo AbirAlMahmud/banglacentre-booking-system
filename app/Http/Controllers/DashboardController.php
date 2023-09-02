@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BookingManage;
 use Exception;
+use App\Models\User;
 use App\Models\Dashboard;
+use App\Models\HallManage;
+use App\Models\PaymentManage;
 use Illuminate\Http\Request;
 use App\Models\PersonalDetails;
+use App\Models\ShiftsModel;
 use Illuminate\Support\Facades\Session;
 
 session_start();
@@ -15,7 +20,12 @@ class DashboardController extends Controller
     public function index()
     {
         $dashboards = Session::get('dashboards');
-        return view('backend.dashboard2', compact('dashboards'));
+        $totalShifts = ShiftsModel::count();
+        $totalUsers = User::count();
+        $totalHalls = HallManage::count();
+        $totalBookings = BookingManage::count();
+        $totalPayments = PaymentManage::count();
+        return view('backend.dashboard2', compact('dashboards', 'totalShifts', 'totalUsers', 'totalHalls', 'totalBookings', 'totalPayments'));
     }
 
     public function edit($id)

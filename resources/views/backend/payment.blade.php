@@ -189,8 +189,8 @@
                                         @csrf
                                         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                             data-key="pk_test_51NhzgxDLuce6dgBf3CtpjpzXm4dzIckcObxQn5z2Apgj6AUFOU1mJLMbH7pwSIIRaqNXIYup8MIWNc3DdOIyMA4p00NEywalWh"
-                                            data-amount=100 data-name="Your Company Name" data-description="Example Charge"
-                                            data-image="{{ asset('ui/backend') }}/assets/images/logo-footer-2-1.png" data-locale="auto" data-currency="gbp"
+                                            data-amount={{ $booking->amount*100 }} data-name="Bangla Centre" data-description="Hall Charge"
+                                            data-image="{{ asset('ui/backend') }}/assets/images/Capture-modified.png" data-locale="auto" data-currency="usd"
                                             data-panel-label="Pay Now"></script>
                                     </form>
 

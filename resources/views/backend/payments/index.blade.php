@@ -15,7 +15,7 @@
                             <th scope="col">Id</th>
                             <th scope="col">User</th>
                             <th scope="col">Hall</th>
-                            <th scope="col">Booking</th>
+                            <th scope="col">Booking ID</th>
                             <th scope="col">Payment Type</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
@@ -28,8 +28,8 @@
                         @foreach ($paymentmanages as $paymentmanages)
                         <tr>
                             <th scope="row">{{ $sl++ }}</th>
-                            <td>{{ $paymentmanages->user_id ?? '' }}</td>
-                            <td>{{ $paymentmanages->hall_manage_id ?? '' }}</td>
+                            <td>{{ $paymentmanages->users->name ?? '' }}</td>
+                            <td>{{ $paymentmanages->hallmanages->hall_name ?? '' }}</td>
                             <td>{{ $paymentmanages->booking_manage_id ?? '' }}</td>
                             <td>{{ $paymentmanages->payment_type ?? '' }}</td>
                             <td>{{ $paymentmanages->status ?? '' }}</td>
