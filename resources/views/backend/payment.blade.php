@@ -190,7 +190,7 @@
                                         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                             data-key="pk_test_51NhzgxDLuce6dgBf3CtpjpzXm4dzIckcObxQn5z2Apgj6AUFOU1mJLMbH7pwSIIRaqNXIYup8MIWNc3DdOIyMA4p00NEywalWh"
                                             data-amount=100 data-name="Your Company Name" data-description="Example Charge"
-                                            data-image="https://stripe.com/img/documentation/checkout/marketplace.png" data-locale="auto" data-currency="gbp"
+                                            data-image="{{ asset('ui/backend') }}/assets/images/logo-footer-2-1.png" data-locale="auto" data-currency="gbp"
                                             data-panel-label="Pay Now"></script>
                                     </form>
 

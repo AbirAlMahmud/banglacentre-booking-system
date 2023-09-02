@@ -32,7 +32,7 @@ class PaymentController extends Controller
         $hall = HallManage::find($hall_id);
 
         $booking = BookingManage::find($booking_id);
-        
+
         return view('backend.payment', compact('hall','booking'));
     }
 
@@ -169,7 +169,7 @@ class PaymentController extends Controller
                 $payment->status = 'Paid';
                 $payment->save();
 
-                UpdateBookedStatus::dispatch($bookingmanage)->delay(now()->addSeconds(60));
+
 
             } else {
                 return 'fail insert in payment table';

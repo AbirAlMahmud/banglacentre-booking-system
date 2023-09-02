@@ -120,7 +120,7 @@ class HomeController extends Controller
             $booking->status = 'pending';
 
             $booking->save();
-            UpdatePendingStatus::dispatch($booking)->delay(now()->addSeconds(60));
+
 
             $hall_id = $request->input('book_now');
 
