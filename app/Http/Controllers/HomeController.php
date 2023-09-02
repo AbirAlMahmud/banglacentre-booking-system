@@ -8,13 +8,8 @@ use App\Models\HallManage;
 use App\Models\ShiftsModel;
 use Illuminate\Http\Request;
 use App\Models\BookingManage;
-use App\Jobs\UpdateBookingStatus;
-use App\Jobs\UpdatePendingStatus;
 use Illuminate\Support\Facades\Auth;
-
-use Illuminate\Support\Facades\Session;
 use App\Http\Requests\SearchPageRequest;
-use Illuminate\Console\Scheduling\Schedule;
 
 use App\Models\PaymentManage;
 use Carbon\Carbon;
@@ -46,21 +41,20 @@ class HomeController extends Controller
         $in_Time = new \DateTime($selected_Shift->in_time);
         $out_Time = new \DateTime($selected_Shift->out_time);
 
-        $query = BookingManage::join('shifts_models', 'booking_manages.shifts_model_id', '=', 'shifts_models.id')
-            ->where('booking_manages.check_in_date', '<=', $request->input('check_out_date'))
-            ->where('booking_manages.check_out_date', '>=', $request->input('check_in_date'))
-             ->where(['shifts_models.id'=>$request->input('shift')]);
-            
+        $query = BookingManage::
+        where('booking_manages.check_in_date', '<=', $request->input('check_out_date'))
+        ->where('booking_manages.check_out_date', '>=', $request->input('check_in_date'))
+        ->where(['shifts_model_id' => $request->input('shift')])
+;    
             
         if ($request->hall != 0) {
             $query->where('booking_manages.hall_manage_id', $request->hall);
         }
         
-
         $existingBooking = $query->get();
-        
+
         $bookingCount = $existingBooking->count();
-        
+
         $check_in_date_view = $request->check_in_date;
         $check_out_date_view = $request->check_out_date;
         $shift_view = $request->shift;
@@ -71,34 +65,46 @@ class HomeController extends Controller
         $numberOfDays = $numberOfDays + 1;
         
 
-        if ($bookingCount == 0) {
-            if ($request->hall == 0) {
-                $allHallInfo = HallManage::all();
-                $discount_prices = []; // Array to store discount prices
+        if ($request->hall != 0 && $bookingCount==0) {
 
-                foreach ($allHallInfo as $hall) {
-                    if ($charity == 1) {
-                        $discount_price = ($hall->price - ($hall->price * $hall->charity_discount) / 100);
-                    } else {
-                        $discount_price = $hall->price;; // No discount
-                    }
-
-                    $discount_prices[$hall->id] = $discount_price; // Store discount price for each hall
-                }
-
-                return view('backend.halllist', compact('allHallInfo', 'discount_prices', 'charity', 'numberOfDays', 'check_in_date_view', 'check_out_date_view', 'shift_view'));
+            if ($charity == 1) {
+                $hallInfo = HallManage::find($request->hall);
+                $discount_price = ($hallInfo->price - ($hallInfo->price * $hallInfo->charity_discount) / 100);
             } else {
-                if ($charity == 1) {
-                    $hallInfo = HallManage::find($request->hall);
-                    $discount_price = ($hallInfo->price - ($hallInfo->price * $hallInfo->charity_discount) / 100);
-                } else {
-                    $hallInfo = HallManage::find($request->hall);
-                    $discount_price = $hallInfo->price;
-                }
-
-                return view('backend.halllist', compact('hallInfo', 'discount_price', 'numberOfDays', 'charity', 'check_in_date_view', 'check_out_date_view', 'shift_view'));
+                $hallInfo = HallManage::find($request->hall);
+                $discount_price = $hallInfo->price;
             }
-        } else {
+
+      
+            return view('backend.halllist', compact('hallInfo', 'discount_price', 'numberOfDays', 'charity', 'check_in_date_view', 'check_out_date_view', 'shift_view'));
+
+
+        } else if ($request->hall == 0 ) {
+            
+                $booking_idsbooked = $existingBooking->pluck('hall_manage_id');
+                $filteredHallInfo = HallManage::all();
+                $allHallInfo = $filteredHallInfo->reject(function ($hall_id) use ($booking_idsbooked) {
+                    return $booking_idsbooked->contains($hall_id->id);
+                });
+                $discount_prices = []; // Array to store discount prices
+                if ($allHallInfo->isEmpty()) {
+                    return redirect()->back()->with('message', 'In this date and shift hall not available !!');
+                } else {
+                    foreach ($filteredHallInfo as $hall) {
+                        if ($charity == 1) {
+                            $discount_price = ($hall->price - ($hall->price * $hall->charity_discount) / 100);
+                        } else {
+                            $discount_price = $hall->price;; // No discount
+                        }
+    
+                        $discount_prices[$hall->id] = $discount_price; // Store discount price for each hall
+                    }
+    
+                    return view('backend.halllist', compact('allHallInfo', 'discount_prices', 'charity', 'numberOfDays', 'check_in_date_view','check_out_date_view', 'shift_view'));
+                    }
+               
+            } 
+        else {
 
             return redirect()->back()->with('message', 'In this date and shift hall not available !!');
         }
