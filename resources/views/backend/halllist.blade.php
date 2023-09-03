@@ -161,12 +161,13 @@
                                             </div>
 
                                             <div class="d-flex flex-column mt-4">
+
                                                 @if (auth()->check())
                                                     <!-- Check if the user is authenticated -->
                                                     <button class="btn btn-success btn-sm" type="submit"
                                                         value="{{ $hallInfo->id }}" name="book_now">Book Now</button>
                                                 @else
-                                                    <a href="{{ route('login') }}" class="btn btn-primary btn-sm"
+                                                    <a href="{{ route('user.login',  $hallInfo,$check_in_date_view,$check_out_date_view, $shift_view  ) }}" class="btn btn-primary btn-sm"
                                                         >Login to Book</a>
                                                 @endif
 

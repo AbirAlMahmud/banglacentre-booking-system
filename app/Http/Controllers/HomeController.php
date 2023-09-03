@@ -4,20 +4,22 @@ namespace App\Http\Controllers;
 
 use Exception;
 
+use Carbon\Carbon;
 use App\Models\HallManage;
 use App\Models\ShiftsModel;
 use Illuminate\Http\Request;
 use App\Models\BookingManage;
+use App\Models\PaymentManage;
 use App\Jobs\UpdateBookingStatus;
+
 use App\Jobs\UpdatePendingStatus;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\SearchPageRequest;
+use App\Models\User;
 use Illuminate\Console\Scheduling\Schedule;
-
-use App\Models\PaymentManage;
-use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -264,5 +266,54 @@ class HomeController extends Controller
                 }
             }
         }
+    }
+
+    public function userLogin($hall, $checkin, $checkout, $shift){
+        return $checkin;
+        // if($request->isMethod('post')){
+
+        //     $credentials = $request->only('email', 'password');
+
+        //     $user = User::where('email', $credentials['email'])->first();
+
+        //     if (!$user) {
+        //         return redirect()->back()->withInput()->withErrors(['email' => 'Email not found']);
+        //     }
+
+        //     if (Hash::check($credentials['password'], $user->password)) {
+        //         Auth::login($user);
+        //         return ;
+        //         // // Redirect to the appropriate dashboard based on the user's role
+        //         // if ($user->role === 'user') {
+        //         //     return back();
+        //         // }
+        //     }
+
+        //     // Wrong password
+        //     return redirect()->back()->withInput()->withErrors(['password' => 'Wrong password']);
+        // }
+        return view('backend.bookings.login');
+    }
+    public function booklogin(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        $user = User::where('email', $credentials['email'])->first();
+
+        if (!$user) {
+            return redirect()->back()->withInput()->withErrors(['email' => 'Email not found']);
+        }
+
+        if (Hash::check($credentials['password'], $user->password)) {
+            Auth::login($user);
+
+            // Redirect to the appropriate dashboard based on the user's role
+            if ($user->role === 'user') {
+                return back();
+            }
+        }
+
+        // Wrong password
+        return redirect()->back()->withInput()->withErrors(['password' => 'Wrong password']);
     }
 }
