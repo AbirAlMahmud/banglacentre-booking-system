@@ -1,3 +1,6 @@
+
+
+
 @extends('backend.layouts.master')
 
 
@@ -41,32 +44,41 @@
                                 <h3 class="login-heading mb-4">Welcome back!</h3>
 
                                 <!-- Sign In Form -->
-                                <form>
+
+                                <form action="{{ route('user.login') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="hall" value="{{ $hall }}">
+                                    <input type="hidden" name="checkin" value="{{ $checkin }}">
+                                    <input type="hidden" name="checkout" value="{{ $checkout }}">
+                                    <input type="hidden" name="shift" value="{{ $shift }}">
+                                    <input type="hidden" name="charity" value="{{ $charity }}">
+
                                     <div class="form-floating mb-3">
-                                        <input type="email" class="form-control" id="floatingInput"
+                                        <input type="email" class="form-control" name="email" id="floatingInput"
                                             placeholder="name@example.com">
                                         <label for="floatingInput">Email address</label>
+                                        
+                                        @error('email')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input type="password" class="form-control" id="floatingPassword"
+                                        <input type="password" class="form-control" name="password" id="floatingPassword"
                                             placeholder="Password">
                                         <label for="floatingPassword">Password</label>
+                                        
+                                        @error('password')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="checkbox" value=""
-                                            id="rememberPasswordCheck">
-                                        <label class="form-check-label" for="rememberPasswordCheck">
-                                            Remember password
-                                        </label>
-                                    </div>
 
                                     <div class="d-grid">
                                         <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
                                             type="submit">Sign in</button>
                                         <div class="text-center">
-                                            <a class="small" href="#">Forgot password?</a>
-                                            <div><a class="small" href="#">Sign Up</a></div>
+                                            <a class="small" href="{{ route('password.request')}}">Forgot password?</a>
+                                            <div><a class="small" href="{{ route('register')}}">Sign Up</a></div>
 
                                         </div>
                                     </div>

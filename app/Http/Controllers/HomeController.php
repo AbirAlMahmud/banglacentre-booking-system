@@ -44,6 +44,7 @@ class HomeController extends Controller
 
         $charity = $request->input('shifts_model_id');
         $charity = $request->input('charity');
+        $hall = $request->hall;
         $selected_Shift = ShiftsModel::findOrFail($request->input('shift'));
         // Calculate the duration in hours
         $in_Time = new \DateTime($selected_Shift->in_time);
@@ -90,7 +91,7 @@ class HomeController extends Controller
             }
 
 
-            return view('backend.halllist', compact('hallInfo', 'discount_price', 'numberOfDays', 'charity', 'check_in_date_view', 'check_out_date_view', 'shift_view'));
+            return view('backend.halllist', compact('hallInfo', 'discount_price', 'numberOfDays', 'charity', 'check_in_date_view', 'check_out_date_view', 'shift_view','hall'));
 
 
         } else if ($request->hall == 0 ) {
@@ -114,7 +115,7 @@ class HomeController extends Controller
                         $discount_prices[$hall->id] = $discount_price; // Store discount price for each hall
                     }
 
-                    return view('backend.halllist', compact('allHallInfo', 'discount_prices', 'charity', 'numberOfDays', 'check_in_date_view','check_out_date_view', 'shift_view'));
+                    return view('backend.halllist', compact('allHallInfo', 'discount_prices', 'charity', 'numberOfDays', 'check_in_date_view','check_out_date_view', 'shift_view','hall'));
                     }
 
             }
@@ -268,52 +269,121 @@ class HomeController extends Controller
         }
     }
 
-    public function userLogin($hall, $checkin, $checkout, $shift){
-        return $checkin;
-        // if($request->isMethod('post')){
+    public function userLogin(Request $request){
 
-        //     $credentials = $request->only('email', 'password');
+        $hall= $request->hall;
+        $checkin= $request->checkin;
+        $checkout= $request->checkout;
+        $shift= $request->shift;
+        $charity= $request->charity;
 
-        //     $user = User::where('email', $credentials['email'])->first();
+        if($request->isMethod('post')){
 
-        //     if (!$user) {
-        //         return redirect()->back()->withInput()->withErrors(['email' => 'Email not found']);
-        //     }
+            $credentials = $request->only('email', 'password');
 
-        //     if (Hash::check($credentials['password'], $user->password)) {
-        //         Auth::login($user);
-        //         return ;
-        //         // // Redirect to the appropriate dashboard based on the user's role
-        //         // if ($user->role === 'user') {
-        //         //     return back();
-        //         // }
-        //     }
+            $user = User::where('email', $credentials['email'])->first();
 
-        //     // Wrong password
-        //     return redirect()->back()->withInput()->withErrors(['password' => 'Wrong password']);
-        // }
+            if (!$user) {
+                return redirect()->back()->withInput()->withErrors(['email' => 'Email not found']);
+            }
+
+            if (Hash::check($credentials['password'], $user->password)) {
+                Auth::login($user);
+                
+                $charity = $charity;
+                $shift = $shift;
+                $selected_Shift = ShiftsModel::findOrFail($shift);
+                // Calculate the duration in hours
+                $in_Time = new \DateTime($selected_Shift->in_time);
+                $out_Time = new \DateTime($selected_Shift->out_time);
+
+                if (strtotime($checkin) > strtotime($checkout)) {
+                    return redirect()->back()->with('message', 'Invalid date selection. Check-in date cannot be greater than check-out date.');
+
+                }
+
+                $query = BookingManage::where('booking_manages.check_in_date', '<=', $checkout)
+                ->where('booking_manages.check_out_date', '>=', $checkin)
+                ->where(['shifts_model_id' => $shift]);
+
+                if ($hall != 0) {
+                    $query->where('booking_manages.hall_manage_id', $hall);
+                }
+
+                $existingBooking = $query->get();
+
+                $bookingCount = $existingBooking->count();
+
+                $check_in_date_view = $checkin;
+                $check_out_date_view = $checkout;
+                $shift_view = $shift;
+
+                $checkInDate = new \DateTime($checkin);
+                $checkOutDate = new \DateTime($checkout);
+                $numberOfDays = $checkInDate->diff($checkOutDate)->days;
+                $numberOfDays = $numberOfDays + 1;
+
+
+                if ($request->hall != 0 && $bookingCount==0) {
+
+                    if ($charity == 1) {
+                        $hallInfo = HallManage::find($hall);
+                        $discount_price = ($hallInfo->price - ($hallInfo->price * $hallInfo->charity_discount) / 100);
+                    } else {
+                        $hallInfo = HallManage::find($hall);
+                        $discount_price = $hallInfo->price;
+                    }
+
+
+                    return view('backend.halllist', compact('hallInfo', 'discount_price', 'numberOfDays', 'charity', 'check_in_date_view', 'check_out_date_view', 'shift_view'));
+
+
+                    } else if ($hall == 0 ) {
+
+                    $booking_idsbooked = $existingBooking->pluck('hall_manage_id');
+                    $filteredHallInfo = HallManage::all();
+                    $allHallInfo = $filteredHallInfo->reject(function ($hall_id) use ($booking_idsbooked) {
+                        return $booking_idsbooked->contains($hall_id->id);
+                    });
+                    $discount_prices = []; // Array to store discount prices
+                    if ($allHallInfo->isEmpty()) {
+                        return redirect()->back()->with('message', 'In this date and shift hall not available !!');
+                    } 
+                    else {
+                        foreach ($filteredHallInfo as $hall) {
+                            if ($charity == 1) {
+                                $discount_price = ($hall->price - ($hall->price * $hall->charity_discount) / 100);
+                            } else {
+                                $discount_price = $hall->price;; // No discount
+                            }
+
+                            $discount_prices[$hall->id] = $discount_price; // Store discount price for each hall
+                        }
+
+                                 return view('backend.halllist', compact('allHallInfo', 'discount_prices', 'charity', 'numberOfDays', 'check_in_date_view','check_out_date_view', 'shift_view'));
+                            }
+
+            }
+            else {
+
+                return redirect()->back()->with('message', 'In this date and shift hall not available !!');
+            
+                    }
+                }
+                // Wrong password
+                return redirect()->back()->withInput()->withErrors(['password' => 'Wrong password']);
+        }
+        
+        
         return view('backend.bookings.login');
     }
-    public function booklogin(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
 
-        $user = User::where('email', $credentials['email'])->first();
 
-        if (!$user) {
-            return redirect()->back()->withInput()->withErrors(['email' => 'Email not found']);
-        }
+    public function userLoginget(Request $request,$hall, $checkin, $checkout, $shift, $charity){
 
-        if (Hash::check($credentials['password'], $user->password)) {
-            Auth::login($user);
+        return view('backend.bookings.login', compact('hall', 'checkin', 'checkout', 'shift', 'charity'));
 
-            // Redirect to the appropriate dashboard based on the user's role
-            if ($user->role === 'user') {
-                return back();
-            }
-        }
-
-        // Wrong password
-        return redirect()->back()->withInput()->withErrors(['password' => 'Wrong password']);
     }
+
+    
 }
