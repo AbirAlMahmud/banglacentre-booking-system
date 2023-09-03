@@ -84,10 +84,13 @@
                                                         <button class="btn btn-success btn-sm" type="submit"
                                                             value="{{ $hall->id }}" name="book_now">Book Now</button>
                                                     @else
-                                                        <a href="{{ route('login') }}" class="btn btn-success btn-sm"
-                                                              type="submit" value="{{ $hall->id }}"
-                                                            name="book_now">Login for Book</a>
-                                                        <!-- You can also add a login link here if needed -->
+                                                    <a href="{{ route('user.login_search', [
+                                                        'hall' => '0',
+                                                        'check_in' => $check_in_date_view,
+                                                        'check_out' => $check_out_date_view,
+                                                        'shift' => $shift_view,
+                                                        'charity' => $charity,
+                                                    ]) }}" class="btn btn-primary btn-sm">Login to Book</a>
                                                     @endif
 
                                                     <a href="{{ route('halldetails', ['id' => $hall->id, 'price' => $price]) }}"
@@ -164,11 +167,18 @@
 
                                                 @if (auth()->check())
                                                     <!-- Check if the user is authenticated -->
-                                                    <button class="btn btn-success btn-sm" type="submit"
+                                                        <button class="btn btn-success btn-sm" type="submit"
                                                         value="{{ $hallInfo->id }}" name="book_now">Book Now</button>
                                                 @else
-                                                    <a href="{{ route('user.login',  $hallInfo,$check_in_date_view,$check_out_date_view, $shift_view  ) }}" class="btn btn-primary btn-sm"
-                                                        >Login to Book</a>
+                                                <a href="{{ route('user.login_search', [
+                                                    'hall' => $hallInfo,
+                                                    'check_in' => $check_in_date_view,
+                                                    'check_out' => $check_out_date_view,
+                                                    'shift' => $shift_view,
+                                                    'charity' => $charity ?? 'default_value_here',
+                                                ]) }}" class="btn btn-primary btn-sm">Login to Book</a>
+                                                
+                                                
                                                 @endif
 
                                                 <a href="{{ route('halldetails', ['id' => $hallInfo->id, 'price' => $price]) }}"

@@ -35,7 +35,8 @@ Route::post('/book', [HomeController::class, 'store'])->name('book_now');
 Route::get('/halldetails/{id}/{price}', [HomeController::class, 'halldetails'])->name('halldetails');
 Route::get('/status_update', [HomeController::class, 'status_update'])->name('status_update');
 Route::get('/status_update_pending', [HomeController::class, 'status_update_pending'])->name('status_update_pending');
-Route::get('/user-login/{hall}/{check_in}/{check_out}/{shift}', [HomeController::class, 'userLogin'])->name('user.login');
+Route::get('/user-login/{hall}/{check_in}/{check_out}/{shift}/{charity}', [HomeController::class, 'userLoginget'])->name('user.login_search');
+Route::post('/user-login-submit', [HomeController::class, 'userLogin'])->name('user.login');
 
 
 
