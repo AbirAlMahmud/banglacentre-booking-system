@@ -244,6 +244,7 @@ class HomeController extends Controller
             if (empty($payment_records)) {
                 $updatebooking = BookingManage::find($booking_id);
                 $updatebooking->status = 'available';
+                $updatebooking->save();
             } else {
                 $updatebooking = BookingManage::find($payment_records->booking_manage_id);
                 $check_in_date = $updatebooking->check_in_date;
