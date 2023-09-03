@@ -39,6 +39,11 @@ Route::get('/user-login/{hall}/{check_in}/{check_out}/{shift}/{charity}', [HomeC
 Route::post('/user-login-submit', [HomeController::class, 'userLogin'])->name('user.login');
 
 
+Route::get('/login/new', function(){
+    return view('backend.bookings.login');
+});
+
+
 
 
 Route::get('/dashboard', [UserDashboardController::class, 'user_dashboard'])->middleware(['auth', 'verified'])->name('dashboard');

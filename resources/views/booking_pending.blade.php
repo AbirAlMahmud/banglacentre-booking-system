@@ -1,12 +1,5 @@
 <x-app-layout>
-    <x-slot name="header">
-        <span class="font-semibold text-xl text-gray-800 leading-tight">
-          <a href="{{ route("dashboard") }}" class="btn btn-primary">Payment List</a>
-        </span>
-        <span class="font-semibold  text-xl text-gray-800 leading-tight ml-3">
-         <a href="{{ route("booking_list") }}" class="btn btn-primary">Booking List</a>
-        </span>
-    </x-slot>
+ 
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -26,7 +19,7 @@
                 <div class="container mb-3">
                     <div class="card">
                         <div class="card-header d-flex">
-                            Payment List
+                            Booking List
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered datatable">
