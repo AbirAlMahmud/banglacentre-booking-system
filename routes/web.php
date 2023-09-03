@@ -38,6 +38,11 @@ Route::get('/status_update_pending', [HomeController::class, 'status_update_pend
 Route::get('/user-login/{hall}/{check_in}/{check_out}/{shift}', [HomeController::class, 'userLogin'])->name('user.login');
 
 
+Route::get('/login/new', function(){
+    return view('backend.bookings.login');
+});
+
+
 
 
 Route::get('/dashboard', [UserDashboardController::class, 'user_dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
